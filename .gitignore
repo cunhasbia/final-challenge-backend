@@ -1,0 +1,8 @@
+node_modules
+.vscode
+.env
+
+./coverage
+*.lcov
+/__tests__/*.sqlite
+/__tests__/database.sqlite-journal
