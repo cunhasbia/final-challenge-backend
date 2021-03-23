@@ -38,9 +38,19 @@ class Product extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Category, {
+    this.hasOne(models.Category, {
       as: 'category',
       foreignKey: 'category_id',
+    });
+
+    this.belongsToMany(models.Inventory, {
+      as: 'inventory',
+      foreignKey: 'product_id',
+    });
+
+    this.belongsToMany(models.Sales, {
+      as: 'sales',
+      foreignKey: 'product_id',
     });
   }
 }

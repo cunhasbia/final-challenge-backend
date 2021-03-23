@@ -18,7 +18,7 @@ class CategoryController {
       }
 
       const categories = await Category.findAndCountAll({
-        attributes: ['id', 'name'],
+        attributes: ['idd', 'name'],
         include: [
           {
             model: Product,

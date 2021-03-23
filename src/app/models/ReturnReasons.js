@@ -31,7 +31,12 @@ class ReturnReasons extends Model {
     return this;
   }
 
-  static associate(models) {}
+  static associate(models) {
+    this.hasMany(models.SalesReturn, {
+      as: 'return_reasons',
+      foreignKey: 'return_reasons_id',
+    });
+  }
 }
 
 export default ReturnReasons;

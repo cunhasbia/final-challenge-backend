@@ -55,7 +55,12 @@ class Sales extends Model {
     return this;
   }
 
-  static associate(models) {}
+  static associate(models) {
+    this.hasMany(models.Product, {
+      as: 'products',
+      foreignKey: 'product_id',
+    });
+  }
 }
 
 export default Sales;

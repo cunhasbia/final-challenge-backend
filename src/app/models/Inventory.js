@@ -51,7 +51,17 @@ class Inventory extends Model {
     return this;
   }
 
-  static associate(models) {}
+  static associate(models) {
+    this.hasMany(models.Product, {
+      as: 'products',
+      foreignKey: 'product_id',
+    });
+
+    this.hasMany(models.Region, {
+      as: 'region',
+      foreignKey: 'region_id',
+    });
+  }
 }
 
 export default Inventory;

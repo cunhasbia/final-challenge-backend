@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
       },
       region_principal_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'region',
@@ -18,7 +18,7 @@ module.exports = {
         onDelete: 'CASCADE',
       },
       region_near_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'region',

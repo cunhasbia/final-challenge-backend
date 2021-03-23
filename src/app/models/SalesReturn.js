@@ -55,7 +55,12 @@ class SalesReturn extends Model {
     return this;
   }
 
-  static associate(models) {}
+  static associate(models) {
+    this.hasOne(models.ReturnReasons, {
+      as: 'return_reasons',
+      foreignKey: 'return_reasons_id',
+    });
+  }
 }
 
 export default SalesReturn;

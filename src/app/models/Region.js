@@ -23,7 +23,18 @@ class Region extends Model {
     return this;
   }
 
-  static associate(models) {}
+  static associate(models) {
+    this.belongsTo(models.Inventory, {
+      as: 'inventory',
+      foreignKey: 'region_id',
+    });
+
+    this.belongsToMany(models.Region, {
+      as: 'region-near',
+      foreignKey: 'region_id',
+      through: 'region-near',
+    });
+  }
 }
 
 export default Region;

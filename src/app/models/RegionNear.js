@@ -11,7 +11,7 @@ class RegionNear extends Model {
           primaryKey: true,
         },
         region_principal_id: {
-          type: Sequelize.STRING,
+          type: Sequelize.INTEGER,
           allowNull: false,
           references: {
             model: 'region',
@@ -21,7 +21,7 @@ class RegionNear extends Model {
           onDelete: 'CASCADE',
         },
         region_near_id: {
-          type: Sequelize.STRING,
+          type: Sequelize.INTEGER,
           allowNull: false,
           references: {
             model: 'region',
@@ -46,8 +46,6 @@ class RegionNear extends Model {
 
     return this;
   }
-
-  static associate(models) {}
 }
 
 export default RegionNear;
