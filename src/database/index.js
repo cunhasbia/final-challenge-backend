@@ -3,8 +3,23 @@ import databaseConfig from '../config/database';
 
 import Product from '../app/models/Product';
 import Category from '../app/models/Category';
+import Region from '../app/models/Region';
+import Sales from '../app/models/Sales';
+import RegionNear from '../app/models/RegionNear';
+import SalesReturn from '../app/models/SalesReturn';
+import ReturnReasons from '../app/models/ReturnReasons';
+import Inventory from '../app/models/Inventory';
 
-const models = [Product, Category];
+const models = [
+  Product,
+  Category,
+  Region,
+  Sales,
+  RegionNear,
+  SalesReturn,
+  ReturnReasons,
+  Inventory,
+];
 
 class Database {
   constructor() {
@@ -23,8 +38,10 @@ class Database {
     }
 
     models
-      .map(model => model.init(this.connection))
-      .map(model => model.associate && model.associate(this.connection.models));
+      .map((model) => model.init(this.connection))
+      .map(
+        (model) => model.associate && model.associate(this.connection.models)
+      );
   }
 }
 
