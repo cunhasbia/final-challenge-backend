@@ -1,47 +1,10 @@
-import Sequelize, { Model } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
 class SaleReturn extends Model {
   static init(sequelize) {
     super.init(
       {
-        id: {
-          type: Sequelize.INTEGER,
-          autoIncrement: true,
-          allowNull: false,
-          primaryKey: true,
-        },
-        quantity: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-        },
-        reason_id: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          references: {
-            model: 'reasons',
-            key: 'id',
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
-        },
-        sale_id: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          references: {
-            model: 'sales',
-            key: 'id',
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
-        },
-        created_at: {
-          type: Sequelize.DATE,
-          allowNull: false,
-        },
-        updated_at: {
-          type: Sequelize.DATE,
-          allowNull: false,
-        },
+        quantity: DataTypes.INTEGER,
       },
       {
         sequelize,
