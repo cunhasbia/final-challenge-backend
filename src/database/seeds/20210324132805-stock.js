@@ -1,24 +1,18 @@
 module.exports = {
   up: async (queryInterface) => {
-    await queryInterface.bulkInsert('products', [
+    await queryInterface.bulkInsert('stocks', [
       {
-        name: 'Livro 01',
-        price: 19,
-        category_id: 1,
+        name: 'RS',
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
-        name: 'Livro 02',
-        price: 25,
-        category_id: 2,
+        name: 'SC',
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
-        name: 'Livro 03',
-        price: 55,
-        category_id: 2,
+        name: 'PR',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -26,6 +20,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.bulkDelete('products', null, {});
+    await queryInterface.bulkDelete('stocks', null, {});
   },
 };

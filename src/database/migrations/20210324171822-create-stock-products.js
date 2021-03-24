@@ -1,27 +1,31 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('region_near', {
+    await queryInterface.createTable('stock_products', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
       },
-      region_principal_id: {
+      quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      product_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'region',
+          model: 'products',
           key: 'id',
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      region_near_id: {
+      stock_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'region',
+          model: 'stocks',
           key: 'id',
         },
         onUpdate: 'CASCADE',
@@ -39,6 +43,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable('region_near');
+    await queryInterface.dropTable('stock_products');
   },
 };

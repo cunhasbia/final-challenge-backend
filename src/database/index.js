@@ -3,22 +3,22 @@ import databaseConfig from '../config/database';
 
 import Product from '../app/models/Product';
 import Category from '../app/models/Category';
-import Region from '../app/models/Region';
-import Sales from '../app/models/Sales';
-import RegionNear from '../app/models/RegionNear';
-import SalesReturn from '../app/models/SalesReturn';
-import ReturnReasons from '../app/models/ReturnReasons';
-import Inventory from '../app/models/Inventory';
+import Reason from '../app/models/Reason';
+import Sale from '../app/models/Sale';
+import StockNear from '../app/models/StockNear';
+import SaleReturn from '../app/models/SaleReturn';
+import Stock from '../app/models/Stock';
+import StockProduct from '../app/models/StockProduct';
 
 const models = [
   Product,
   Category,
-  Region,
-  Sales,
-  RegionNear,
-  SalesReturn,
-  ReturnReasons,
-  Inventory,
+  Stock,
+  Reason,
+  Sale,
+  StockNear,
+  SaleReturn,
+  StockProduct,
 ];
 
 class Database {

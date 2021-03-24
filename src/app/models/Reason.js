@@ -1,12 +1,11 @@
 import { Model, DataTypes } from 'sequelize';
 
-class Category extends Model {
+class Reason extends Model {
   static init(sequelize) {
     super.init(
       {
-        name: DataTypes.STRING,
+        description: DataTypes.STRING,
       },
-
       {
         sequelize,
       }
@@ -16,11 +15,11 @@ class Category extends Model {
   }
 
   static associate(models) {
-    this.hasMany(models.Product, {
-      as: 'products',
-      foreignKey: 'category_id',
+    this.hasMany(models.SaleReturn, {
+      as: 'sale_return',
+      foreignKey: 'reason_id',
     });
   }
 }
 
-export default Category;
+export default Reason;
