@@ -1,11 +1,41 @@
-import { Model, DataTypes } from 'sequelize';
+import Sequelize, { Model } from 'sequelize';
 
 class Product extends Model {
   static init(sequelize) {
     super.init(
       {
-        name: DataTypes.STRING,
-        price: DataTypes.FLOAT,
+        id: {
+          type: Sequelize.INTEGER,
+          autoIncrement: true,
+          allowNull: false,
+          primaryKey: true,
+        },
+        name: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        price: {
+          type: Sequelize.FLOAT,
+          allowNull: false,
+        },
+        category_id: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          references: {
+            model: 'categories',
+            key: 'id',
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
+        },
+        created_at: {
+          type: Sequelize.DATE,
+          allowNull: false,
+        },
+        updated_at: {
+          type: Sequelize.DATE,
+          allowNull: false,
+        },
       },
 
       {
