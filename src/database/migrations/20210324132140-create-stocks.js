@@ -7,19 +7,9 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      quantity: {
-        type: Sequelize.INTEGER,
+      name: {
+        type: Sequelize.STRING,
         allowNull: false,
-      },
-      product_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'products',
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
       },
       created_at: {
         type: Sequelize.DATE,
