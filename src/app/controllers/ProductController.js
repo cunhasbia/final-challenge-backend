@@ -122,7 +122,7 @@ class ProductController {
         return response.status(404).json({ message: 'Product not found' });
       }
 
-      return response.json(product);
+      return response.json({ product });
     } catch (error) {
       return response.status(error.status || 400).json(error.message);
     }
