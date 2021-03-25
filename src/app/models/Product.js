@@ -6,6 +6,7 @@ class Product extends Model {
       {
         name: DataTypes.STRING,
         price: DataTypes.FLOAT,
+        total: DataTypes.INTEGER,
       },
 
       {

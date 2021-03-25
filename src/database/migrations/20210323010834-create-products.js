@@ -15,6 +15,10 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false,
       },
+      total: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       category_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
