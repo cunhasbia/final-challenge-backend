@@ -19,6 +19,34 @@ class CategoryController {
 
       const categories = await Category.findAndCountAll({
         attributes: ['id', 'name'],
+        where,
+        limit,
+        offset: limit * (page - 1),
+      });
+
+      return response.json(categories);
+    } catch (error) {
+      return response.status(error.status || 400).json(error.message);
+    }
+  }
+
+  async show(request, response) {
+    try {
+      const { id } = request.params;
+      const { page, limit } = request.query;
+      const where = {};
+      const parsed = Number.parseInt(id);
+
+      if (!page || !limit) {
+        return response.status(400).json({ message: 'Invalid params' });
+      }
+
+      if (Number.isNaN(parsed)) {
+        return response.status(400).json({ message: 'Invalid ID' });
+      }
+
+      const category = await Category.findByPk(parsed, {
+        attributes: ['id', 'name'],
         include: [
           {
             model: Product,
@@ -31,99 +59,15 @@ class CategoryController {
         offset: limit * (page - 1),
       });
 
-      return response.json(categories);
+      if (!category) {
+        return response.status(404).json({ message: 'Category not found' });
+      }
+
+      return response.json(category);
     } catch (error) {
       return response.status(error.status || 400).json(error.message);
     }
   }
-
-  // async show(request, response) {
-  //   try {
-  //     const { id } = request.params;
-
-  //     const parsed = Number.parseInt(id);
-
-  //     if (Number.isNaN(parsed)) {
-  //       return response.status(400).json({ message: 'Invalid ID' });
-  //     }
-
-  //     const category = await Category.findByPk(parsed);
-
-  //     if (!category) {
-  //       return response.status(404).json({ message: 'Category not found' });
-  //     }
-
-  //     return response.json(category);
-  //   } catch (error) {
-  //     return response.status(error.status || 400).json(error.message);
-  //   }
-  // }
-
-  // async store(request, response) {
-  //   try {
-  //     const { name } = request.body;
-
-  //     const category = await Category.create({
-  //       name,
-  //     });
-
-  //     return response.json(category);
-  //   } catch (error) {
-  //     return response.status(error.status || 400).json(error.message);
-  //   }
-  // }
-
-  // async update(request, response) {
-  //   try {
-  //     const { id } = request.params;
-  //     const { name } = request.body;
-
-  //     const parsed = Number.parseInt(id);
-
-  //     if (Number.isNaN(parsed)) {
-  //       return response.status(400).json({ message: 'Invalid ID' });
-  //     }
-
-  //     const category = await Category.findByPk(parsed);
-
-  //     if (!category) {
-  //       return response.status(404).json({ message: 'Category not found' });
-  //     }
-
-  //     if (!name) {
-  //       return response.status(404).json({ message: 'Name Required' });
-  //     }
-  //     category.name = name;
-  //     category.save();
-
-  //     return response.json();
-  //   } catch (error) {
-  //     return response.status(error.status || 400).json(error.message);
-  //   }
-  // }
-
-  // async delete(request, response) {
-  //   try {
-  //     const { id } = request.params;
-
-  //     const parsed = Number.parseInt(id);
-
-  //     if (Number.isNaN(parsed)) {
-  //       return response.status(400).json({ message: 'Invalid ID' });
-  //     }
-
-  //     const category = await Category.findByPk(parsed);
-
-  //     if (!category) {
-  //       return response.status(404).json({ message: 'Category not found' });
-  //     }
-  //     await category.destroy();
-
-  //     return response.json();
-  //   } catch (error) {
-  //     return response.status(error.status || 400).json(error.message);
-  //   }
-  // }
 }
 
 export default new CategoryController();

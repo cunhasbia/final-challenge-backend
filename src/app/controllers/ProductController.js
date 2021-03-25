@@ -6,7 +6,8 @@ import Category from '../models/Category';
 class ProductController {
   async index(request, response) {
     try {
-      const { page, limit, name, category_id } = request.query;
+      const { page, limit, name } = request.query;
+
       const where = {};
 
       if (!page || !limit) {
@@ -17,19 +18,8 @@ class ProductController {
         where.name = name;
       }
 
-      if (category_id) {
-        where.category_id = category_id;
-      }
-
       const products = await Product.findAndCountAll({
         attributes: ['id', 'name', 'price'],
-        include: [
-          {
-            model: Category,
-            as: 'category',
-            attributes: ['id', 'name'],
-          },
-        ],
         where,
         limit,
         offset: limit * (page - 1),
@@ -105,24 +95,32 @@ class ProductController {
     try {
       const { id } = request.params;
       const { name, price, category_id } = request.body;
+      const parsed = Number.parseInt(id);
 
-      const product = await Product.update(
-        {
-          name,
-          price,
-          category_id,
-        },
-        {
-          where: { id },
-          returning: true,
-        }
-      );
-
-      if (!product) {
-        return response.status(404).json({ message: 'Product not found' });
+      if ((!name || !price, !category_id)) {
+        return response.status(400).json({
+          message: 'Invalid data',
+        });
       }
 
-      return response.json({ product });
+      if (Number.isNaN(parsed)) {
+        return response.status(400).json({ message: 'Invalid ID' });
+      }
+
+      const product = await Product.findByPk(parsed);
+
+      if (!product) {
+        return response.status(404).json({
+          message: 'Product not found',
+        });
+      }
+
+      product.name = name;
+      product.price = price;
+      product.category_id = category_id;
+      product.save();
+
+      return response.json(product);
     } catch (error) {
       return response.status(error.status || 400).json(error.message);
     }
@@ -131,13 +129,21 @@ class ProductController {
   async delete(request, response) {
     try {
       const { id } = request.params;
+      const parsed = Number.parseInt(id);
 
-      const product = await Product.destroy({ where: { id } });
-
-      if (!product) {
-        return response.status(404).json({ message: 'Product not found' });
+      if (Number.isNaN(parsed)) {
+        return response.status(400).json({ message: 'Invalid ID' });
       }
 
+      const product = await Product.findByPk(parsed);
+
+      if (!product) {
+        return response.status(404).json({
+          message: 'Product not found',
+        });
+      }
+
+      product.destroy();
       return response.sendStatus(202);
     } catch (error) {
       return response.status(error.status || 400).json(error.message);
