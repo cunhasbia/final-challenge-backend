@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('stock_near', {
+    await queryInterface.createTable('stock_nearby', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -17,7 +17,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      stock_near_id: {
+      stock_nearby_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -39,6 +39,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable('stock_near');
+    await queryInterface.dropTable('stock_nearby');
   },
 };

@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
 
-class StockNear extends Model {
+class StockNearby extends Model {
   static init(sequelize) {
     super.init(
       {},
@@ -20,4 +20,4 @@ class StockNear extends Model {
   }
 }
 
-export default StockNear;
+export default StockNearby;

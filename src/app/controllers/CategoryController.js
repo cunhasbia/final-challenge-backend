@@ -37,93 +37,93 @@ class CategoryController {
     }
   }
 
-  async show(request, response) {
-    try {
-      const { id } = request.params;
+  // async show(request, response) {
+  //   try {
+  //     const { id } = request.params;
 
-      const parsed = Number.parseInt(id);
+  //     const parsed = Number.parseInt(id);
 
-      if (Number.isNaN(parsed)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
+  //     if (Number.isNaN(parsed)) {
+  //       return response.status(400).json({ message: 'Invalid ID' });
+  //     }
 
-      const category = await Category.findByPk(parsed);
+  //     const category = await Category.findByPk(parsed);
 
-      if (!category) {
-        return response.status(404).json({ message: 'Category not found' });
-      }
+  //     if (!category) {
+  //       return response.status(404).json({ message: 'Category not found' });
+  //     }
 
-      return response.json(category);
-    } catch (error) {
-      return response.status(error.status || 400).json(error.message);
-    }
-  }
+  //     return response.json(category);
+  //   } catch (error) {
+  //     return response.status(error.status || 400).json(error.message);
+  //   }
+  // }
 
-  async store(request, response) {
-    try {
-      const { name } = request.body;
+  // async store(request, response) {
+  //   try {
+  //     const { name } = request.body;
 
-      const category = await Category.create({
-        name,
-      });
+  //     const category = await Category.create({
+  //       name,
+  //     });
 
-      return response.json(category);
-    } catch (error) {
-      return response.status(error.status || 400).json(error.message);
-    }
-  }
+  //     return response.json(category);
+  //   } catch (error) {
+  //     return response.status(error.status || 400).json(error.message);
+  //   }
+  // }
 
-  async update(request, response) {
-    try {
-      const { id } = request.params;
-      const { name } = request.body;
+  // async update(request, response) {
+  //   try {
+  //     const { id } = request.params;
+  //     const { name } = request.body;
 
-      const parsed = Number.parseInt(id);
+  //     const parsed = Number.parseInt(id);
 
-      if (Number.isNaN(parsed)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
+  //     if (Number.isNaN(parsed)) {
+  //       return response.status(400).json({ message: 'Invalid ID' });
+  //     }
 
-      const category = await Category.findByPk(parsed);
+  //     const category = await Category.findByPk(parsed);
 
-      if (!category) {
-        return response.status(404).json({ message: 'Category not found' });
-      }
+  //     if (!category) {
+  //       return response.status(404).json({ message: 'Category not found' });
+  //     }
 
-      if (!name) {
-        return response.status(404).json({ message: 'Name Required' });
-      }
-      category.name = name;
-      category.save();
+  //     if (!name) {
+  //       return response.status(404).json({ message: 'Name Required' });
+  //     }
+  //     category.name = name;
+  //     category.save();
 
-      return response.json();
-    } catch (error) {
-      return response.status(error.status || 400).json(error.message);
-    }
-  }
+  //     return response.json();
+  //   } catch (error) {
+  //     return response.status(error.status || 400).json(error.message);
+  //   }
+  // }
 
-  async delete(request, response) {
-    try {
-      const { id } = request.params;
+  // async delete(request, response) {
+  //   try {
+  //     const { id } = request.params;
 
-      const parsed = Number.parseInt(id);
+  //     const parsed = Number.parseInt(id);
 
-      if (Number.isNaN(parsed)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
+  //     if (Number.isNaN(parsed)) {
+  //       return response.status(400).json({ message: 'Invalid ID' });
+  //     }
 
-      const category = await Category.findByPk(parsed);
+  //     const category = await Category.findByPk(parsed);
 
-      if (!category) {
-        return response.status(404).json({ message: 'Category not found' });
-      }
-      await category.destroy();
+  //     if (!category) {
+  //       return response.status(404).json({ message: 'Category not found' });
+  //     }
+  //     await category.destroy();
 
-      return response.json();
-    } catch (error) {
-      return response.status(error.status || 400).json(error.message);
-    }
-  }
+  //     return response.json();
+  //   } catch (error) {
+  //     return response.status(error.status || 400).json(error.message);
+  //   }
+  // }
 }
 
 export default new CategoryController();

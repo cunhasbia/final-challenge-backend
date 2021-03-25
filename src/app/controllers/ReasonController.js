@@ -37,93 +37,93 @@ class ReasonController {
     }
   }
 
-  async show(request, response) {
-    try {
-      const { id } = request.params;
+  // async show(request, response) {
+  //   try {
+  //     const { id } = request.params;
 
-      const parsed = Number.parseInt(id);
+  //     const parsed = Number.parseInt(id);
 
-      if (Number.isNaN(parsed)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
+  //     if (Number.isNaN(parsed)) {
+  //       return response.status(400).json({ message: 'Invalid ID' });
+  //     }
 
-      const reason = await Reason.findByPk(parsed);
+  //     const reason = await Reason.findByPk(parsed);
 
-      if (!reason) {
-        return response.status(404).json({ message: 'Reason not found' });
-      }
+  //     if (!reason) {
+  //       return response.status(404).json({ message: 'Reason not found' });
+  //     }
 
-      return response.json(reason);
-    } catch (error) {
-      return response.status(error.status || 400).json(error.message);
-    }
-  }
+  //     return response.json(reason);
+  //   } catch (error) {
+  //     return response.status(error.status || 400).json(error.message);
+  //   }
+  // }
 
-  async store(request, response) {
-    try {
-      const { description } = request.body;
+  // async store(request, response) {
+  //   try {
+  //     const { description } = request.body;
 
-      const reason = await Reason.create({
-        description,
-      });
+  //     const reason = await Reason.create({
+  //       description,
+  //     });
 
-      return response.json(reason);
-    } catch (error) {
-      return response.status(error.status || 400).json(error.message);
-    }
-  }
+  //     return response.json(reason);
+  //   } catch (error) {
+  //     return response.status(error.status || 400).json(error.message);
+  //   }
+  // }
 
-  async update(request, response) {
-    try {
-      const { id } = request.params;
-      const { description } = request.body;
+  // async update(request, response) {
+  //   try {
+  //     const { id } = request.params;
+  //     const { description } = request.body;
 
-      const parsed = Number.parseInt(id);
+  //     const parsed = Number.parseInt(id);
 
-      if (Number.isNaN(parsed)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
+  //     if (Number.isNaN(parsed)) {
+  //       return response.status(400).json({ message: 'Invalid ID' });
+  //     }
 
-      const reason = await Reason.findByPk(parsed);
+  //     const reason = await Reason.findByPk(parsed);
 
-      if (!reason) {
-        return response.status(404).json({ message: 'Reason not found' });
-      }
+  //     if (!reason) {
+  //       return response.status(404).json({ message: 'Reason not found' });
+  //     }
 
-      if (!reason) {
-        return response.status(404).json({ message: 'Description Required' });
-      }
-      reason.description = description;
-      reason.save();
+  //     if (!reason) {
+  //       return response.status(404).json({ message: 'Description Required' });
+  //     }
+  //     reason.description = description;
+  //     reason.save();
 
-      return response.json();
-    } catch (error) {
-      return response.status(error.status || 400).json(error.message);
-    }
-  }
+  //     return response.json();
+  //   } catch (error) {
+  //     return response.status(error.status || 400).json(error.message);
+  //   }
+  // }
 
-  async delete(request, response) {
-    try {
-      const { id } = request.params;
+  // async delete(request, response) {
+  //   try {
+  //     const { id } = request.params;
 
-      const parsed = Number.parseInt(id);
+  //     const parsed = Number.parseInt(id);
 
-      if (Number.isNaN(parsed)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
+  //     if (Number.isNaN(parsed)) {
+  //       return response.status(400).json({ message: 'Invalid ID' });
+  //     }
 
-      const reason = await Reason.findByPk(parsed);
+  //     const reason = await Reason.findByPk(parsed);
 
-      if (!reason) {
-        return response.status(404).json({ message: 'Reason not found' });
-      }
-      await reason.destroy();
+  //     if (!reason) {
+  //       return response.status(404).json({ message: 'Reason not found' });
+  //     }
+  //     await reason.destroy();
 
-      return response.json();
-    } catch (error) {
-      return response.status(error.status || 400).json(error.message);
-    }
-  }
+  //     return response.json();
+  //   } catch (error) {
+  //     return response.status(error.status || 400).json(error.message);
+  //   }
+  // }
 }
 
 export default new ReasonController();

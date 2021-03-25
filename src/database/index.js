@@ -5,10 +5,9 @@ import Product from '../app/models/Product';
 import Category from '../app/models/Category';
 import Reason from '../app/models/Reason';
 import Sale from '../app/models/Sale';
-import StockNear from '../app/models/StockNear';
+import StockNearby from '../app/models/StockNearby';
 import SaleReturn from '../app/models/SaleReturn';
 import Stock from '../app/models/Stock';
-import StockProduct from '../app/models/StockProduct';
 
 const models = [
   Product,
@@ -16,9 +15,8 @@ const models = [
   Stock,
   Reason,
   Sale,
-  StockNear,
+  StockNearby,
   SaleReturn,
-  StockProduct,
 ];
 
 class Database {

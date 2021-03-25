@@ -4,9 +4,8 @@ class Stock extends Model {
   static init(sequelize) {
     super.init(
       {
-        name: DataTypes.STRING,
+        quantity: DataTypes.INTEGER,
       },
-
       {
         sequelize,
       }
@@ -16,24 +15,19 @@ class Stock extends Model {
   }
 
   static associate(models) {
-    this.hasOne(models.StockNear, {
+    this.hasOne(models.StockNearby, {
       as: 'stock_principal',
       foreignKey: 'stock_principal_id',
     });
 
-    this.hasMany(models.StockNear, {
+    this.hasMany(models.StockNearby, {
       as: 'stock_near',
-      foreignKey: 'stock_near_id',
+      foreignKey: 'stock_nearby_id',
     });
 
-    this.hasOne(models.Sale, {
-      as: 'sale',
-      foreignKey: 'stock_id',
-    });
-
-    this.hasOne(models.StockProduct, {
-      as: 'stock_product',
-      foreignKey: 'stock_id',
+    this.belongsTo(models.Product, {
+      as: 'stocks',
+      foreignKey: 'product_id',
     });
   }
 }

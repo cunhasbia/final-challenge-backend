@@ -27,8 +27,8 @@ class Product extends Model {
       foreignKey: 'product_id',
     });
 
-    this.hasMany(models.StockProduct, {
-      as: 'stock_products',
+    this.hasOne(models.Stock, {
+      as: 'products',
       foreignKey: 'product_id',
     });
   }
