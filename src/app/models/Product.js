@@ -1,34 +1,13 @@
-import Sequelize, { Model } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
 class Product extends Model {
   static init(sequelize) {
     super.init(
       {
-        id: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          autoIncrement: true,
-          primaryKey: true,
-        },
-        name: {
-          type: Sequelize.STRING,
-          allowNull: false,
-        },
-        price: {
-          type: Sequelize.FLOAT,
-          allowNull: false,
-        },
-        category_id: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          references: {
-            model: 'categories',
-            key: 'id',
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
-        },
+        name: DataTypes.STRING,
+        price: DataTypes.FLOAT,
       },
+
       {
         sequelize,
       }
@@ -38,18 +17,18 @@ class Product extends Model {
   }
 
   static associate(models) {
-    this.hasOne(models.Category, {
+    this.belongsTo(models.Category, {
       as: 'category',
       foreignKey: 'category_id',
     });
 
-    this.belongsToMany(models.Inventory, {
-      as: 'inventory',
+    this.hasMany(models.Sale, {
+      as: 'sales',
       foreignKey: 'product_id',
     });
 
-    this.belongsToMany(models.Sales, {
-      as: 'sales',
+    this.hasOne(models.Stock, {
+      as: 'products',
       foreignKey: 'product_id',
     });
   }

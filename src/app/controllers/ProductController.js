@@ -100,6 +100,49 @@ class ProductController {
       return response.status(error.status || 400).json(error.message);
     }
   }
+
+  async update(request, response) {
+    try {
+      const { id } = request.params;
+      const { name, price, category_id } = request.body;
+
+      const product = await Product.update(
+        {
+          name,
+          price,
+          category_id,
+        },
+        {
+          where: { id },
+          returning: true,
+        }
+      );
+
+      if (!product) {
+        return response.status(404).json({ message: 'Product not found' });
+      }
+
+      return response.json({ product });
+    } catch (error) {
+      return response.status(error.status || 400).json(error.message);
+    }
+  }
+
+  async delete(request, response) {
+    try {
+      const { id } = request.params;
+
+      const product = await Product.destroy({ where: { id } });
+
+      if (!product) {
+        return response.status(404).json({ message: 'Product not found' });
+      }
+
+      return response.sendStatus(202);
+    } catch (error) {
+      return response.status(error.status || 400).json(error.message);
+    }
+  }
 }
 
 export default new ProductController();

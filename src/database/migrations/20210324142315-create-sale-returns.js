@@ -1,27 +1,31 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('region_near', {
+    await queryInterface.createTable('sale_returns', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
       },
-      region_principal_id: {
+      quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      reason_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'region',
+          model: 'reasons',
           key: 'id',
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      region_near_id: {
+      sale_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'region',
+          model: 'sales',
           key: 'id',
         },
         onUpdate: 'CASCADE',
@@ -39,6 +43,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable('region_near');
+    await queryInterface.dropTable('sale_returns');
   },
 };

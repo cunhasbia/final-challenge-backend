@@ -1,29 +1,29 @@
 /* eslint-disable radix */
 /* eslint-disable no-unused-vars */
-import Category from '../models/Category';
-import Product from '../models/Product';
+import Reason from '../models/Reason';
+import SaleReturn from '../models/SaleReturn';
 
-class CategoryController {
+class ReasonController {
   async index(request, response) {
     try {
-      const { page, limit, name } = request.query;
+      const { page, limit, description } = request.query;
       const where = {};
 
       if (!page || !limit) {
         return response.status(400).json({ message: 'Invalid params' });
       }
 
-      if (name) {
-        where.name = name;
+      if (description) {
+        where.description = description;
       }
 
-      const categories = await Category.findAndCountAll({
-        attributes: ['id', 'name'],
+      const reason = await Reason.findAndCountAll({
+        attributes: ['id', 'description'],
         include: [
           {
-            model: Product,
-            as: 'products',
-            attributes: ['id', 'name'],
+            model: SaleReturn,
+            as: 'sale_returns',
+            attributes: ['id', 'description'],
           },
         ],
         where,
@@ -31,7 +31,7 @@ class CategoryController {
         offset: limit * (page - 1),
       });
 
-      return response.json(categories);
+      return response.json(reason);
     } catch (error) {
       return response.status(error.status || 400).json(error.message);
     }
@@ -47,13 +47,13 @@ class CategoryController {
   //       return response.status(400).json({ message: 'Invalid ID' });
   //     }
 
-  //     const category = await Category.findByPk(parsed);
+  //     const reason = await Reason.findByPk(parsed);
 
-  //     if (!category) {
-  //       return response.status(404).json({ message: 'Category not found' });
+  //     if (!reason) {
+  //       return response.status(404).json({ message: 'Reason not found' });
   //     }
 
-  //     return response.json(category);
+  //     return response.json(reason);
   //   } catch (error) {
   //     return response.status(error.status || 400).json(error.message);
   //   }
@@ -61,13 +61,13 @@ class CategoryController {
 
   // async store(request, response) {
   //   try {
-  //     const { name } = request.body;
+  //     const { description } = request.body;
 
-  //     const category = await Category.create({
-  //       name,
+  //     const reason = await Reason.create({
+  //       description,
   //     });
 
-  //     return response.json(category);
+  //     return response.json(reason);
   //   } catch (error) {
   //     return response.status(error.status || 400).json(error.message);
   //   }
@@ -76,7 +76,7 @@ class CategoryController {
   // async update(request, response) {
   //   try {
   //     const { id } = request.params;
-  //     const { name } = request.body;
+  //     const { description } = request.body;
 
   //     const parsed = Number.parseInt(id);
 
@@ -84,17 +84,17 @@ class CategoryController {
   //       return response.status(400).json({ message: 'Invalid ID' });
   //     }
 
-  //     const category = await Category.findByPk(parsed);
+  //     const reason = await Reason.findByPk(parsed);
 
-  //     if (!category) {
-  //       return response.status(404).json({ message: 'Category not found' });
+  //     if (!reason) {
+  //       return response.status(404).json({ message: 'Reason not found' });
   //     }
 
-  //     if (!name) {
-  //       return response.status(404).json({ message: 'Name Required' });
+  //     if (!reason) {
+  //       return response.status(404).json({ message: 'Description Required' });
   //     }
-  //     category.name = name;
-  //     category.save();
+  //     reason.description = description;
+  //     reason.save();
 
   //     return response.json();
   //   } catch (error) {
@@ -112,12 +112,12 @@ class CategoryController {
   //       return response.status(400).json({ message: 'Invalid ID' });
   //     }
 
-  //     const category = await Category.findByPk(parsed);
+  //     const reason = await Reason.findByPk(parsed);
 
-  //     if (!category) {
-  //       return response.status(404).json({ message: 'Category not found' });
+  //     if (!reason) {
+  //       return response.status(404).json({ message: 'Reason not found' });
   //     }
-  //     await category.destroy();
+  //     await reason.destroy();
 
   //     return response.json();
   //   } catch (error) {
@@ -126,4 +126,4 @@ class CategoryController {
   // }
 }
 
-export default new CategoryController();
+export default new ReasonController();

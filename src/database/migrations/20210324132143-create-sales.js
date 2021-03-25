@@ -1,39 +1,25 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('sales_return', {
+    await queryInterface.createTable('sales', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
       },
-      sales_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'sales',
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        allowNull: false,
-      },
       quantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      return_reasons_id: {
+      product_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'return_reasons',
+          model: 'products',
           key: 'id',
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-      },
-      total: {
-        type: Sequelize.FLOAT,
-        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,
@@ -47,6 +33,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable('sales_return');
+    await queryInterface.dropTable('sales');
   },
 };
