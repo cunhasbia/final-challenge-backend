@@ -76,6 +76,7 @@ class ProductController {
   async store(request, response) {
     try {
       const { name, price, category_id } = request.body;
+      const total = 0;
 
       if (!name || !price || !category_id) {
         return response.status(400).json({ message: 'Invalid data' });
@@ -93,7 +94,12 @@ class ProductController {
         return response.status(404).json({ message: 'Category not found' });
       }
 
-      const product = await Product.create({ name, price, category_id });
+      const product = await Product.create({
+        name,
+        price,
+        category_id,
+        total,
+      });
 
       return response.json(product);
     } catch (error) {
