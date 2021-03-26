@@ -18,7 +18,7 @@ class ProductController {
       }
 
       const products = await Product.findAndCountAll({
-        attributes: ['id', 'name', 'price'],
+        attributes: ['id', 'name', 'price', 'total'],
         where,
         limit,
         offset: limit * (page - 1),
@@ -42,7 +42,7 @@ class ProductController {
 
       const product = await Product.findOne({
         where: { id },
-        attributes: ['id', 'name', 'price'],
+        attributes: ['id', 'name', 'price', 'total'],
         include: [
           {
             model: Category,
@@ -83,16 +83,7 @@ class ProductController {
         return response.status(404).json({ message: 'Category not found' });
       }
 
-<<<<<<< HEAD
-      const product = await Product.create({
-        name,
-        price,
-        category_id,
-        total,
-      });
-=======
       const product = await Product.create({ name, price, category_id, total });
->>>>>>> e38cd7d2f59a128c0b77e1dcb3cd1e4964b8b4f8
 
       return response.json(product);
     } catch (error) {
