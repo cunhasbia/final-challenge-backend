@@ -8,23 +8,11 @@ class StockProduct extends Model {
       },
       {
         sequelize,
+        tableName: 'stock_product',
       }
     );
 
     return this;
-  }
-
-  static associate(models) {
-    this.belongsToMany(models.Product, {
-      through: 'stock_and_products',
-      as: 'products',
-      foreignKey: 'product_id',
-    });
-
-    this.belongsTo(models.Stock, {
-      as: 'stock',
-      foreignKey: 'stock_id',
-    });
   }
 }
 

@@ -28,9 +28,15 @@ class Product extends Model {
       foreignKey: 'product_id',
     });
 
-    this.hasOne(models.Stock, {
-      as: 'products',
+    // this.hasMany(models.Stock, {
+    //   as: 'stock',
+    //   foreignKey: 'product_id',
+    // });
+    this.belongsToMany(models.Stock, {
       foreignKey: 'product_id',
+      otherKey: 'stock_id',
+      through: 'stock_product',
+      as: 'stocks',
     });
   }
 }

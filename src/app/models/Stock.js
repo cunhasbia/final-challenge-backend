@@ -31,9 +31,16 @@ class Stock extends Model {
       foreignKey: 'stock_id',
     });
 
-    this.belongsTo(models.Product, {
-      as: 'stock_product',
-      foreignKey: 'product_id',
+    // this.belongsTo(models.Product, {
+    //   as: 'stock_product',
+    //   foreignKey: 'product_id',
+    // });
+
+    this.belongsToMany(models.Product, {
+      foreignKey: 'stock_id',
+      otherKey: 'product_id',
+      through: 'stock_product',
+      as: 'products',
     });
   }
 }
