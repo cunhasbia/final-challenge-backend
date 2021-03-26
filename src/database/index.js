@@ -2,6 +2,7 @@ import Sequelize from 'sequelize';
 import databaseConfig from '../config/database';
 
 import Product from '../app/models/Product';
+import StockProduct from '../app/models/StockProduct';
 import Category from '../app/models/Category';
 import Reason from '../app/models/Reason';
 import Sale from '../app/models/Sale';
@@ -17,6 +18,7 @@ const models = [
   Sale,
   StockNearby,
   SaleReturn,
+  StockProduct,
 ];
 
 class Database {
