@@ -11,10 +11,6 @@ class ReasonController {
       const { page, limit, description } = request.query;
       const where = {};
 
-      if (!page || !limit) {
-        return response.status(400).json({ message: 'Invalid params' });
-      }
-
       if (description) {
         where.description = description;
       }
@@ -38,14 +34,6 @@ class ReasonController {
       const { page, limit } = request.query;
       const where = {};
       const parsed = Number.parseInt(id);
-
-      if (!page || !limit) {
-        return response.status(400).json({ message: 'Invalid params' });
-      }
-
-      if (Number.isNaN(parsed)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
 
       const reason = await Reason.findByPk(parsed, {
         attributes: ['id', 'description'],

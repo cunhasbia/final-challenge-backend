@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import CategoryController from '../controllers/CategoryController';
+import { invalidParams, isNumber } from '../middlewares/refactor';
 
 const routes = new Router();
 
-routes.get('/category', CategoryController.index);
-routes.get('/category/:id', CategoryController.show);
+routes.get('/category', invalidParams, CategoryController.index);
+routes.get('/category/:id', invalidParams, isNumber, CategoryController.show);
 
 export default routes;

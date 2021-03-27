@@ -7,12 +7,16 @@ import Product from '../models/Product';
 class StockProductController {
   async index(request, response) {
     try {
+      const { page, limit } = request.query;
+
       const stockProduct = await StockProduct.findAll({
         attributes: ['id', 'quantity'],
         include: [
           { model: Product, as: 'products', attributes: ['id', 'name'] },
           { model: Stock, as: 'stock', attributes: ['name'] },
         ],
+        limit,
+        offset: limit * (page - 1),
       });
 
       return response.json(stockProduct);
@@ -24,12 +28,6 @@ class StockProductController {
   async show(request, response) {
     try {
       const { id } = request.params;
-
-      const parsed = Number.parseInt(id);
-
-      if (Number.isNaN(parsed)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
 
       const stockProduct = await StockProduct.findOne({
         where: { id },
@@ -54,20 +52,8 @@ class StockProductController {
     try {
       const { quantity, product_id, stock_id } = request.body;
 
-      if (!quantity || !product_id || !stock_id) {
-        return response.status(400).json({ message: 'Invalid data' });
-      }
-
       const parsedProduct = Number.parseInt(product_id);
       const parsedStock = Number.parseInt(stock_id);
-
-      if (Number.isNaN(parsedProduct)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
-
-      if (Number.isNaN(parsedStock)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
 
       const product = await Product.findByPk(parsedProduct);
 
@@ -100,24 +86,12 @@ class StockProductController {
 
   async update(request, response) {
     try {
-      const { id } = request.params;
-      const { quantity, stock_id } = request.body;
+      const { quantity, product_id, stock_id } = request.body;
 
-      if (!quantity || !stock_id) {
-        return response.status(400).json({ message: 'Invalid data' });
-      }
-      const parsedId = Number.parseInt(id);
+      const parsedProduct = Number.parseInt(product_id);
       const parsedStock = Number.parseInt(stock_id);
 
-      if (Number.isNaN(parsedId)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
-
-      if (Number.isNaN(parsedStock)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
-
-      const stockProduct = await StockProduct.findByPk(parsedId);
+      const stockProduct = await StockProduct.findByPk(parsedProduct);
 
       if (!stockProduct) {
         return response.status(404).json({
@@ -156,10 +130,6 @@ class StockProductController {
     try {
       const { id } = request.params;
       const parsedId = Number.parseInt(id);
-
-      if (Number.isNaN(parsedId)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
 
       const stockProduct = await StockProduct.findByPk(parsedId);
 

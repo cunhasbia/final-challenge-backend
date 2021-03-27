@@ -9,10 +9,6 @@ class CategoryController {
       const { page, limit, name } = request.query;
       const where = {};
 
-      if (!page || !limit) {
-        return response.status(400).json({ message: 'Invalid params' });
-      }
-
       if (name) {
         where.name = name;
       }
@@ -34,16 +30,7 @@ class CategoryController {
     try {
       const { id } = request.params;
       const { page, limit } = request.query;
-      const where = {};
       const parsed = Number.parseInt(id);
-
-      if (!page || !limit) {
-        return response.status(400).json({ message: 'Invalid params' });
-      }
-
-      if (Number.isNaN(parsed)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
 
       const category = await Category.findByPk(parsed, {
         attributes: ['id', 'name'],
@@ -54,7 +41,6 @@ class CategoryController {
             attributes: ['id', 'name'],
           },
         ],
-        where,
         limit,
         offset: limit * (page - 1),
       });

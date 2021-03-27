@@ -23,14 +23,6 @@ class StockController {
       const where = {};
       const parsed = Number.parseInt(id);
 
-      if (!page || !limit) {
-        return response.status(400).json({ message: 'Invalid params' });
-      }
-
-      if (Number.isNaN(parsed)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
-
       const stock = await Stock.findByPk(parsed, {
         attributes: ['id', 'name'],
         // include: [
