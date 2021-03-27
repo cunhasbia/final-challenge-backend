@@ -15,8 +15,7 @@ class Sale extends Model {
   }
 
   static associate(models) {
-    this.belongsToMany(models.Product, {
-      through: 'sales_products',
+    this.belongsTo(models.Product, {
       as: 'products',
       foreignKey: 'product_id',
     });
@@ -33,7 +32,7 @@ class Sale extends Model {
 
     this.belongsTo(models.Reason, {
       as: 'reasons',
-      foreignKey: 'sale_id',
+      foreignKey: 'id',
     });
   }
 }

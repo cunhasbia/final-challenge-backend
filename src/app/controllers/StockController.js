@@ -16,7 +16,6 @@ class StockController {
     }
   }
 
-  // ERROR
   async show(request, response) {
     try {
       const { id } = request.params;
@@ -34,13 +33,13 @@ class StockController {
 
       const stock = await Stock.findByPk(parsed, {
         attributes: ['id', 'name'],
-        include: [
-          {
-            model: Product,
-            as: 'products',
-            attributes: ['name'],
-          },
-        ],
+        // include: [
+        //   {
+        //     model: Product,
+        //     as: 'product',
+        //     attributes: ['name'],
+        //   },
+        // ],
         where,
         limit,
         offset: limit * (page - 1),

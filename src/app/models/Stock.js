@@ -26,16 +26,17 @@ class Stock extends Model {
       foreignKey: 'stock_nearby_id',
     });
 
-    this.hasOne(models.Sale, {
-      as: 'sale',
-      foreignKey: 'stock_id',
-    });
-
     this.belongsToMany(models.Product, {
       foreignKey: 'stock_id',
       otherKey: 'product_id',
       through: 'stock_product',
       as: 'products',
+    });
+
+    this.belongsToMany(models.Product, {
+      foreignKey: 'product_id',
+      through: 'product_id',
+      as: 'product',
     });
   }
 }
