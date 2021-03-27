@@ -10,7 +10,7 @@ class StockProductController {
       const stockProduct = await StockProduct.findAll({
         attributes: ['id', 'quantity'],
         include: [
-          { model: Product, as: 'products', attributes: ['id', 'name'] },
+          { model: Product, as: 'product_stock', attributes: ['id', 'name'] },
           { model: Stock, as: 'stock', attributes: ['name'] },
         ],
       });
@@ -31,11 +31,10 @@ class StockProductController {
         return response.status(400).json({ message: 'Invalid ID' });
       }
 
-      const stockProduct = await StockProduct.findOne({
-        where: { id },
+      const stockProduct = await StockProduct.findByPk(parsed, {
         attributes: ['id', 'quantity'],
         include: [
-          { model: Product, as: 'products', attributes: ['name'] },
+          { model: Product, as: 'product_stock', attributes: ['name'] },
           { model: Stock, as: 'stock', attributes: ['name'] },
         ],
       });
@@ -82,15 +81,28 @@ class StockProductController {
       }
 
       // faz a soma e inclui na tabela produtos
-      const quantityTotal = product.total;
+      let quantityTotal = product.total;
       product.total = quantityTotal + quantity;
       product.save();
 
-      const stockProduct = await StockProduct.create({
-        quantity,
-        product_id,
-        stock_id,
+      const stockProduct = await StockProduct.findOne({
+        where: {
+          product_id,
+          stock_id,
+        },
       });
+
+      if (!stockProduct) {
+        stockProduct.create({
+          quantity,
+          product_id,
+          stock_id,
+        });
+      } else {
+        quantityTotal = stockProduct.quantity;
+        stockProduct.quantity = quantityTotal + quantity;
+        stockProduct.save();
+      }
 
       return response.json({ stockProduct });
     } catch (error) {
