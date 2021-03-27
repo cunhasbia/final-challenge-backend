@@ -25,6 +25,11 @@ class Sale extends Model {
       as: 'sale_return',
       foreignKey: 'sale_id',
     });
+
+    this.belongsTo(models.Reason, {
+      as: 'reasons',
+      foreignKey: 'sale_id',
+    });
   }
 }
 

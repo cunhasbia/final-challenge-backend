@@ -19,6 +19,16 @@ class Reason extends Model {
       as: 'sale_return',
       foreignKey: 'reason_id',
     });
+
+    this.hasMany(models.Product, {
+      as: 'product',
+      foreignKey: 'id',
+    });
+
+    this.hasMany(models.Category, {
+      as: 'category',
+      foreignKey: 'id',
+    });
   }
 }
 

@@ -29,6 +29,45 @@ class CategoryController {
       return response.status(error.status || 400).json(error.message);
     }
   }
+
+  async show(request, response) {
+    try {
+      const { id } = request.params;
+      const { page, limit } = request.query;
+      const where = {};
+      const parsed = Number.parseInt(id);
+
+      if (!page || !limit) {
+        return response.status(400).json({ message: 'Invalid params' });
+      }
+
+      if (Number.isNaN(parsed)) {
+        return response.status(400).json({ message: 'Invalid ID' });
+      }
+
+      const category = await Category.findByPk(parsed, {
+        attributes: ['id', 'name'],
+        include: [
+          {
+            model: Product,
+            as: 'products',
+            attributes: ['id', 'name'],
+          },
+        ],
+        where,
+        limit,
+        offset: limit * (page - 1),
+      });
+
+      if (!category) {
+        return response.status(404).json({ message: 'Category not found' });
+      }
+
+      return response.json(category);
+    } catch (error) {
+      return response.status(error.status || 400).json(error.message);
+    }
+  }
 }
 
 export default new CategoryController();
