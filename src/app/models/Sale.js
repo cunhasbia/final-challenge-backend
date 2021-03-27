@@ -21,6 +21,11 @@ class Sale extends Model {
       foreignKey: 'product_id',
     });
 
+    this.belongsTo(models.Stock, {
+      as: 'stock',
+      foreignKey: 'stock_id',
+    });
+
     this.hasOne(models.SaleReturn, {
       as: 'sale_return',
       foreignKey: 'sale_id',
