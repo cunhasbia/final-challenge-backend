@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import Stock from '../models/Stock';
 import Product from '../models/Product';
+import StockProduct from '../models/StockProduct';
 
 class StockController {
   async index(request, response) {
@@ -36,15 +37,29 @@ class StockController {
         attributes: ['id', 'name'],
         include: [
           {
-            model: Product,
-            as: 'products',
-            attributes: ['name'],
+            model: StockProduct,
+            as: 'stock',
+            attributes: ['id'],
+            required: true,
           },
+
+          // { model: Product, as: 'products', attributes: ['id'] },
         ],
-        where,
-        limit,
-        offset: limit * (page - 1),
       });
+
+      // const stock = await Stock.findByPk(parsed, {
+      //   attributes: ['id', 'name'],
+      //   include: [
+      //     {
+      //       model: Product,
+      //       as: 'products',
+      //       attributes: ['name'],
+      //     },
+      //   ],
+      //   where,
+      //   limit,
+      //   offset: limit * (page - 1),
+      // });
 
       if (!stock) {
         return response.status(404).json({ message: 'Stock not found' });

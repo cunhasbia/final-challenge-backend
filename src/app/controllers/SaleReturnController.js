@@ -30,7 +30,7 @@ class SaleReturnController {
           },
           {
             model: Stock,
-            as: '',
+            as: 'stock',
             attributes: ['product_id'],
           },
         ],
