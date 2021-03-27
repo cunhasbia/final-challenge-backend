@@ -24,15 +24,14 @@ class Product extends Model {
     });
 
     this.hasMany(models.Sale, {
-      as: 'sales',
+      as: 'sale',
       foreignKey: 'product_id',
     });
 
-    this.belongsToMany(models.Stock, {
+    this.belongsToMany(models.StockProduct, {
+      as: 'product_stock',
       foreignKey: 'product_id',
-      otherKey: 'stock_id',
-      through: 'stock_product',
-      as: 'stocks',
+      through: 'stock_products',
     });
   }
 }

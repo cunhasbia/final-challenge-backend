@@ -17,14 +17,11 @@ class Reason extends Model {
   static associate(models) {
     this.hasMany(models.SaleReturn, {
       as: 'sale_return',
-      foreignKey: 'reason_id',
     });
-
     this.hasMany(models.Product, {
       as: 'product',
       foreignKey: 'id',
     });
-
     this.hasMany(models.Category, {
       as: 'category',
       foreignKey: 'id',

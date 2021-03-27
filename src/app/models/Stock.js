@@ -16,27 +16,26 @@ class Stock extends Model {
   }
 
   static associate(models) {
-    this.hasOne(models.StockNearby, {
-      as: 'stock_principal',
-      foreignKey: 'stock_principal_id',
+    this.hasMany(models.Sale, {
+      as: 'sale',
+      foreignKey: 'id',
+    });
+
+    this.belongsToMany(models.StockProduct, {
+      as: 'stock',
+      foreignKey: 'stock_id',
+      through: 'stock_products',
     });
 
     this.hasMany(models.StockNearby, {
-      as: 'stock_nearby',
-      foreignKey: 'stock_nearby_id',
+      as: 'stock_principal',
+      foreignKey: 'id',
     });
 
-    this.hasOne(models.Sale, {
-      as: 'sale',
-      foreignKey: 'stock_id',
-    });
-
-    this.belongsToMany(models.Product, {
-      foreignKey: 'stock_id',
-      otherKey: 'product_id',
-      through: 'stock_product',
-      as: 'products',
-    });
+    // this.hasMany(models.StockNearby, {
+    //   as: 'stock_nearby',
+    //   foreignKey: 'id',
+    // });
   }
 }
 

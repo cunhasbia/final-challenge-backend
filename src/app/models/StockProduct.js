@@ -8,7 +8,6 @@ class StockProduct extends Model {
       },
       {
         sequelize,
-        // tableName: 'stock_product',
       }
     );
 
@@ -17,12 +16,16 @@ class StockProduct extends Model {
 
   static associate(models) {
     this.belongsTo(models.Product, {
-      as: 'products',
+      as: 'product_stock',
       foreignKey: 'product_id',
     });
 
     this.belongsTo(models.Stock, {
       as: 'stock',
+      foreignKey: 'stock_id',
+    });
+    this.belongsTo(models.StockNearby, {
+      as: 'stock_nearby',
       foreignKey: 'stock_id',
     });
   }

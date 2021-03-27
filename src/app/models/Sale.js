@@ -15,10 +15,14 @@ class Sale extends Model {
   }
 
   static associate(models) {
-    this.belongsToMany(models.Product, {
-      through: 'sales_products',
-      as: 'products',
+    this.belongsTo(models.Product, {
+      as: 'product',
       foreignKey: 'product_id',
+    });
+
+    this.hasMany(models.SaleReturn, {
+      as: 'sale_return',
+      foreignKey: 'sale_id',
     });
 
     this.belongsTo(models.Stock, {
@@ -26,14 +30,9 @@ class Sale extends Model {
       foreignKey: 'stock_id',
     });
 
-    this.hasOne(models.SaleReturn, {
-      as: 'sale_return',
-      foreignKey: 'sale_id',
-    });
-
     this.belongsTo(models.Reason, {
       as: 'reasons',
-      foreignKey: 'sale_id',
+      foreignKey: 'id',
     });
   }
 }
