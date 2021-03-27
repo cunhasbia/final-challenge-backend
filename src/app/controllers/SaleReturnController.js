@@ -3,7 +3,8 @@
 import Reason from '../models/Reason';
 import Sale from '../models/Sale';
 import SaleReturn from '../models/SaleReturn';
-import Stock from '../models/Stock';
+import Product from '../models/Product';
+import Sequelize from 'sequelize';
 
 class SaleReturnController {
   async index(request, response) {
@@ -16,12 +17,24 @@ class SaleReturnController {
     // }
 
     try {
-      const saleReturn = await SaleReturn.findAndCountAll({
+      const saleReturn = await SaleReturn.findAll({
+        attributes: [
+          'product_id',
+          [Sequelize.fn('SUM', Sequelize.col('quantity'), 'total')],
+        ],
+        group: ['product_id'],
+
         include: [
           {
             model: Sale,
             as: 'sale',
             attributes: ['id'],
+            include: {
+              model: Product,
+              required: true,
+              as: 'products',
+              attibutes: ['id'],
+            },
           },
           {
             model: Reason,
@@ -29,6 +42,9 @@ class SaleReturnController {
             attributes: ['id'],
           },
         ],
+        // group: ['sale.products.name'],
+        order: [['quantity', 'DESC']],
+        limit: 1,
       });
       return response.json(saleReturn);
     } catch (error) {
