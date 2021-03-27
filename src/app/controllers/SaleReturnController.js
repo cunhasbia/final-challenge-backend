@@ -1,31 +1,34 @@
-/* eslint-disable camelcase */
 /* eslint-disable radix */
 /* eslint-disable no-unused-vars */
-import Sequelize from 'sequelize';
 import Reason from '../models/Reason';
 import Sale from '../models/Sale';
 import SaleReturn from '../models/SaleReturn';
 import Product from '../models/Product';
+import Category from '../models/Category';
+import Sequelize from 'sequelize';
 
 class SaleReturnController {
   async index(request, response) {
-    //   try {
-    //     const saleReturn = await SaleReturn.findAndCountAll();
-    //     return response.json(saleReturn);
-    //   } catch (error) {
-    //     return response.status(error.status || 400).json(error.message);
-    //   }
-    // }
-
     try {
       const saleReturn = await SaleReturn.findAll({
         attributes: [
-          'product_id',
-          [Sequelize.fn('SUM', Sequelize.col('quantity'), 'total')],
+          [Sequelize.fn('sum', Sequelize.col('SaleReturn.quantity')), 'total'],
         ],
-        group: ['product_id'],
-
+        raw: true,
+        group: [
+          'sale.id',
+          'sale->products.id',
+          'reason.id',
+          'sale->products->category.id',
+        ],
+        order: Sequelize.literal('total DESC'),
+        limit: 1,
         include: [
+          {
+            model: Reason,
+            as: 'reason',
+            attributes: ['id', 'description'],
+          },
           {
             model: Sale,
             as: 'sale',
@@ -34,20 +37,19 @@ class SaleReturnController {
               model: Product,
               required: true,
               as: 'products',
-              attibutes: ['id'],
+              attibutes: ['id', 'name'],
+              include: {
+                model: Category,
+                required: true,
+                as: 'category',
+                attibutes: ['id', 'name'],
+              },
             },
           },
-          {
-            model: Reason,
-            as: 'reason',
-            attributes: ['id'],
-          },
         ],
-        // group: ['sale.products.name'],
-        order: [['quantity', 'DESC']],
-        limit: 1,
       });
-      return response.json(saleReturn);
+
+      return response.json(saleReturn[0]);
     } catch (error) {
       return response.status(error.status || 400).json(error.message);
     }
