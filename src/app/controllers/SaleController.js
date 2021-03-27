@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable camelcase */
 /* eslint-disable radix */
 import { Op } from 'sequelize';
@@ -142,7 +143,7 @@ class SaleController {
 
         // ENTRA NO SEGUNDO ESTOQUE PRÓXIMO
         if (!stockProduct || stockProduct.quantity < quantity) {
-          console.log('entrou estagio 1');
+          console.log('entrou estagio 2');
           const value = stockPrincipal.stock_nearby_id;
 
           // const ultimoStockId = ;
@@ -152,6 +153,10 @@ class SaleController {
               stock_id: parseInt(value[2]),
             },
           });
+
+          if (!stockProduct) {
+            return response.json({ Error: 'sem produto no estoque!' });
+          }
 
           const sale = await Sale.create({
             quantity,

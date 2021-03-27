@@ -9,10 +9,6 @@ class ProductController {
       const { page, limit, name } = request.query;
       const where = {};
 
-      if (!page || !limit) {
-        return response.status(400).json({ message: 'Invalid params' });
-      }
-
       if (name) {
         where.name = name;
       }
@@ -32,13 +28,8 @@ class ProductController {
 
   async show(request, response) {
     try {
+      const { page, limit } = request.query;
       const { id } = request.params;
-
-      const parsed = Number.parseInt(id);
-
-      if (Number.isNaN(parsed)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
 
       const product = await Product.findOne({
         where: { id },
@@ -50,6 +41,8 @@ class ProductController {
             attributes: ['id', 'name'],
           },
         ],
+        limit,
+        offset: limit * (page - 1),
       });
 
       if (!product) {
@@ -66,16 +59,6 @@ class ProductController {
     try {
       const { name, price, category_id } = request.body;
       const total = 0;
-
-      if (!name || !price || !category_id) {
-        return response.status(400).json({ message: 'Invalid data' });
-      }
-
-      const parsed = Number.parseInt(category_id);
-
-      if (Number.isNaN(parsed)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
 
       const category = await Category.findByPk(category_id);
 
@@ -96,16 +79,6 @@ class ProductController {
       const { id } = request.params;
       const { name, price, category_id } = request.body;
       const parsed = Number.parseInt(id);
-
-      if ((!name || !price, !category_id)) {
-        return response.status(400).json({
-          message: 'Invalid data',
-        });
-      }
-
-      if (Number.isNaN(parsed)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
 
       const product = await Product.findByPk(parsed);
 
@@ -130,10 +103,6 @@ class ProductController {
     try {
       const { id } = request.params;
       const parsed = Number.parseInt(id);
-
-      if (Number.isNaN(parsed)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
 
       const product = await Product.findByPk(parsed);
 

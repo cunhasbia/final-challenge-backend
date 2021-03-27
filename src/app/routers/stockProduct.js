@@ -1,12 +1,30 @@
 import { Router } from 'express';
 import StockProductController from '../controllers/StockProductController';
+import {
+  invalidParams,
+  isNumber,
+  stockProductData,
+  isProductNumber,
+  isStockNumber,
+} from '../middlewares/refactor';
 
 const routes = new Router();
 
-routes.get('/stock-product', StockProductController.index);
-routes.get('/stock-product/:id', StockProductController.show);
-routes.post('/stock-product', StockProductController.store);
-routes.put('/stock-product/:id', StockProductController.update);
-routes.delete('/stock-product/:id', StockProductController.delete);
+routes.get('/stock-product', invalidParams, StockProductController.index);
+routes.get('/stock-product/:id', isNumber, StockProductController.show);
+routes.post(
+  '/stock-product',
+  stockProductData,
+  isProductNumber,
+  isStockNumber,
+  StockProductController.store
+);
+routes.put(
+  '/stock-product/:id',
+  isProductNumber,
+  isStockNumber,
+  StockProductController.update
+);
+routes.delete('/stock-product/:id', isNumber, StockProductController.delete);
 
 export default routes;

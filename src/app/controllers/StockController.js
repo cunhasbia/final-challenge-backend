@@ -17,21 +17,12 @@ class StockController {
     }
   }
 
-  // ERROR
   async show(request, response) {
     try {
       const { id } = request.params;
       const { page, limit } = request.query;
       const where = {};
       const parsed = Number.parseInt(id);
-
-      if (!page || !limit) {
-        return response.status(400).json({ message: 'Invalid params' });
-      }
-
-      if (Number.isNaN(parsed)) {
-        return response.status(400).json({ message: 'Invalid ID' });
-      }
 
       const stock = await Stock.findByPk(parsed, {
         attributes: ['id', 'name'],
@@ -45,6 +36,16 @@ class StockController {
 
           // { model: Product, as: 'products', attributes: ['id'] },
         ],
+        // include: [
+        //   {
+        //     model: Product,
+        //     as: 'product',
+        //     attributes: ['name'],
+        //   },
+        // ],
+        where,
+        limit,
+        offset: limit * (page - 1),
       });
 
       // const stock = await Stock.findByPk(parsed, {

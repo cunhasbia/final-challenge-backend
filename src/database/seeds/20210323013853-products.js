@@ -4,7 +4,7 @@ module.exports = {
       {
         name: 'Livro 01',
         price: 19,
-        total: 0,
+        total: 10,
         category_id: 1,
         created_at: new Date(),
         updated_at: new Date(),
@@ -12,7 +12,7 @@ module.exports = {
       {
         name: 'Livro 02',
         price: 25,
-        total: 0,
+        total: 20,
         category_id: 2,
         created_at: new Date(),
         updated_at: new Date(),
@@ -20,7 +20,7 @@ module.exports = {
       {
         name: 'Livro 03',
         price: 55,
-        total: 0,
+        total: 30,
         category_id: 2,
         created_at: new Date(),
         updated_at: new Date(),

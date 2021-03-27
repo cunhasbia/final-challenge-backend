@@ -1,9 +1,11 @@
+/* eslint-disable camelcase */
 /* eslint-disable radix */
 /* eslint-disable no-unused-vars */
+import Sequelize from 'sequelize';
 import Reason from '../models/Reason';
 import Sale from '../models/Sale';
 import SaleReturn from '../models/SaleReturn';
-import Stock from '../models/Stock';
+import Product from '../models/Product';
 
 class SaleReturnController {
   async index(request, response) {
@@ -16,24 +18,34 @@ class SaleReturnController {
     // }
 
     try {
-      const saleReturn = await SaleReturn.findAndCountAll({
+      const saleReturn = await SaleReturn.findAll({
+        attributes: [
+          'product_id',
+          [Sequelize.fn('SUM', Sequelize.col('quantity'), 'total')],
+        ],
+        group: ['product_id'],
+
         include: [
           {
             model: Sale,
             as: 'sale',
-            attributes: ['sale_id'],
+            attributes: ['id'],
+            include: {
+              model: Product,
+              required: true,
+              as: 'products',
+              attibutes: ['id'],
+            },
           },
           {
             model: Reason,
             as: 'reason',
-            attributes: ['reason_id'],
-          },
-          {
-            model: Stock,
-            as: 'stock',
-            attributes: ['product_id'],
+            attributes: ['id'],
           },
         ],
+        // group: ['sale.products.name'],
+        order: [['quantity', 'DESC']],
+        limit: 1,
       });
       return response.json(saleReturn);
     } catch (error) {
@@ -41,18 +53,53 @@ class SaleReturnController {
     }
   }
 
-  // async show(request, response) {}
+  async show(request, response) {
+    try {
+      const { id } = request.params;
+
+      const parsed = Number.parseInt(id);
+
+      if (Number.isNaN(parsed)) {
+        return response.status(400).json({ message: 'Invalid ID' });
+      }
+
+      const returnSale = await SaleReturn.findOne({
+        where: { id },
+        // attributes: ['quantity'],
+        include: [
+          {
+            model: Sale,
+            as: 'sale',
+            attributes: ['id'],
+          },
+          {
+            model: Reason,
+            as: 'reason',
+            attributes: ['id'],
+          },
+        ],
+      });
+
+      if (!returnSale) {
+        return response.status(404).json({ message: 'Return Sale not found' });
+      }
+
+      return response.json(returnSale);
+    } catch (error) {
+      return response.status(error.status || 400).json(error.message);
+    }
+  }
 
   async store(request, response) {
     try {
-      const { quantity, reasonId, saleId } = request.body;
+      const { quantity, reason_id, sale_id } = request.body;
 
-      if (!quantity || !reasonId || !saleId) {
+      if (!quantity || !reason_id || !sale_id) {
         return response.status(400).json({ message: 'Invalid data' });
       }
 
-      const parsedReason = Number.parseInt(reasonId);
-      const parsedSale = Number.parseInt(saleId);
+      const parsedReason = Number.parseInt(reason_id);
+      const parsedSale = Number.parseInt(sale_id);
 
       if (Number.isNaN(parsedReason)) {
         return response.status(400).json({ message: 'Invalid ID' });
@@ -62,8 +109,8 @@ class SaleReturnController {
         return response.status(400).json({ message: 'Invalid ID' });
       }
 
-      const reason = await Reason.findByPk(reasonId);
-      const sale = await Sale.findByPk(saleId);
+      const reason = await Reason.findByPk(reason_id);
+      const sale = await Sale.findByPk(sale_id);
 
       if (!reason) {
         return response.status(404).json({ message: 'Reason not found' });
@@ -81,8 +128,8 @@ class SaleReturnController {
 
       const saleReturn = await SaleReturn.create({
         quantity,
-        reasonId,
-        saleId,
+        reason_id,
+        sale_id,
       });
 
       return response.json(saleReturn);
