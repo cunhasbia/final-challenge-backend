@@ -7,7 +7,7 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      stock_principal_id: {
+      stock_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -18,14 +18,8 @@ module.exports = {
         onDelete: 'CASCADE',
       },
       stock_nearby_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: 'stocks',
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
       },
       created_at: {
         type: Sequelize.DATE,
