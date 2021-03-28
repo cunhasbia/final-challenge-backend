@@ -68,6 +68,22 @@ class ReasonController {
       return response.status(error.status || 400).json(error.message);
     }
   }
+
+  async store(request, response) {
+    try {
+      const { description } = request.body;
+
+      if (!description) {
+        return response.status(404).json({ message: 'Invalid data' });
+      }
+
+      const reason = await Reason.create({ description });
+
+      return response.json(reason);
+    } catch (error) {
+      return response.status(error.status || 400).json(error.message);
+    }
+  }
 }
 
 export default new ReasonController();

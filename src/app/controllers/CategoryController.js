@@ -30,6 +30,7 @@ class CategoryController {
     try {
       const { id } = request.params;
       const { page, limit } = request.query;
+
       const parsed = Number.parseInt(id);
 
       const category = await Category.findByPk(parsed, {
@@ -37,7 +38,7 @@ class CategoryController {
         include: [
           {
             model: Product,
-            as: 'product',
+            as: 'products',
             attributes: ['id', 'name'],
           },
         ],
@@ -48,6 +49,22 @@ class CategoryController {
       if (!category) {
         return response.status(404).json({ message: 'Category not found' });
       }
+
+      return response.json(category);
+    } catch (error) {
+      return response.status(error.status || 400).json(error.message);
+    }
+  }
+
+  async store(request, response) {
+    try {
+      const { name } = request.body;
+
+      if (!name) {
+        return response.status(404).json({ message: 'Invalid data' });
+      }
+
+      const category = await Category.create({ name });
 
       return response.json(category);
     } catch (error) {
