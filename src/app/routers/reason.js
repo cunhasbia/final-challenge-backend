@@ -6,5 +6,6 @@ const routes = new Router();
 
 routes.get('/reason', invalidParams, ReasonController.index);
 routes.get('/reason/:id', invalidParams, isNumber, ReasonController.show);
+routes.post('/reason', ReasonController.store);
 
 export default routes;
