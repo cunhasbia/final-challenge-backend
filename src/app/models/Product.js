@@ -33,11 +33,6 @@ class Product extends Model {
       foreignKey: 'product_id',
       through: 'stock_products',
     });
-
-    this.hasMany(models.SaleReturn, {
-      as: 'sale_return',
-      foreignKey: 'id',
-    });
   }
 }
 
