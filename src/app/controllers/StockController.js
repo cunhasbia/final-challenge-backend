@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import Stock from '../models/Stock';
 import Product from '../models/Product';
+import Category from '../models/Category';
 import StockProduct from '../models/StockProduct';
 
 class StockController {

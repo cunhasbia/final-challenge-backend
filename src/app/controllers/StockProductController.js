@@ -1,6 +1,5 @@
 /* eslint-disable radix */
 /* eslint-disable camelcase */
-import { Op } from 'sequelize';
 import StockProduct from '../models/StockProduct';
 import Stock from '../models/Stock';
 import Product from '../models/Product';
