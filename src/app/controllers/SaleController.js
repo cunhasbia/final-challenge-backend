@@ -132,7 +132,7 @@ class SaleController {
       // ENTRA NO PRIMEIRO ESTOQUE PRÓXIMO
       if (stockProduct.quantity < quantity) {
         console.log(
-          `-> ############ entrou estagio 1 ${stockProduct.stock_id}`
+          `-> ############ entrou verificação 1 ${stockProduct.stock_id}`
         );
         const stockPrincipal = await StockNearby.findByPk(stock_id);
 
@@ -145,7 +145,7 @@ class SaleController {
 
         // ENTRA NO SEGUNDO ESTOQUE PRÓXIMO
         if (!stockProduct || stockProduct.quantity < quantity) {
-          console.log('entrou estagio 2');
+          console.log('entrou verificação 2');
           const value = stockPrincipal.stock_nearby_id;
 
           // const ultimoStockId = ;
