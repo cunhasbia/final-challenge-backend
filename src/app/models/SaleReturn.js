@@ -24,6 +24,10 @@ class SaleReturn extends Model {
       as: 'sale',
       foreignKey: 'sale_id',
     });
+    this.hasMany(models.Product, {
+      as: 'product',
+      foreignKey: 'product_id',
+    });
   }
 }
 

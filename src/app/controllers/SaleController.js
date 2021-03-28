@@ -47,7 +47,9 @@ class SaleController {
       });
 
       if (!sale) {
-        return response.status(404).json({ message: 'Product not found' });
+        return response
+          .status(404)
+          .json({ message: 'Stock product not found' });
       }
 
       return response.json(sale);

@@ -19,10 +19,7 @@ class SaleReturnController {
 
     try {
       const saleReturn = await SaleReturn.findAll({
-        attributes: [
-          'product_id',
-          [Sequelize.fn('SUM', Sequelize.col('quantity'), 'total')],
-        ],
+        attributes: [Sequelize.fn('COUNT', Sequelize.col('quantity'), 'total')],
         group: ['product_id'],
 
         include: [
@@ -33,7 +30,7 @@ class SaleReturnController {
             include: {
               model: Product,
               required: true,
-              as: 'products',
+              as: 'product',
               attibutes: ['id'],
             },
           },

@@ -22,7 +22,7 @@ class Sale extends Model {
 
     this.hasMany(models.SaleReturn, {
       as: 'sale_return',
-      foreignKey: 'sale_id',
+      foreignKey: 'id',
     });
 
     this.belongsTo(models.Stock, {
