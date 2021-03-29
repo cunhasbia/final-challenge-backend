@@ -53,7 +53,14 @@ class SaleReturnController {
         ],
       });
 
-      return response.json(saleReturn[0]);
+      
+      return response.json({
+        'Item com mais devolução': saleReturn[0]['sale.products.name'],
+        'Motivo mais devolvido': saleReturn[0]['reason.description'],
+        'Categoria do item mais devolvido':
+          saleReturn[0]['sale.products.category.name'],
+      });
+      
     } catch (error) {
       return response.status(error.status || 400).json(error.message);
     }
