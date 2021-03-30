@@ -31,7 +31,7 @@ class SaleController {
 
       const sale = await Sale.findOne({
         where: { id },
-        attributes: ['quantity'],
+        attributes: ['id', 'quantity'],
         include: [
           {
             model: Product,
@@ -114,7 +114,7 @@ class SaleController {
       });
 
       if (product.total < quantity) {
-        return response.status(404).json({ 'Qtde Indisponível': all });
+        return response.status(404).json({ 'Qtde indisponível': all });
       }
 
       // consulta nas tabelas para fazer a venda
