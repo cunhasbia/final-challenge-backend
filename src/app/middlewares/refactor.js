@@ -2,6 +2,8 @@
 /* eslint-disable radix */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable consistent-return */
+// eslint-disable-next-line import/no-unresolved
+
 function invalidParams(request, response, next) {
   const { page, limit } = request.query;
 

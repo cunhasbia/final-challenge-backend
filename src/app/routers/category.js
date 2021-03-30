@@ -6,6 +6,5 @@ const routes = new Router();
 
 routes.get('/category', invalidParams, CategoryController.index);
 routes.get('/category/:id', invalidParams, isNumber, CategoryController.show);
-routes.post('/category', CategoryController.store);
 
 export default routes;

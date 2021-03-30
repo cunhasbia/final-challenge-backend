@@ -4,7 +4,7 @@ module.exports = {
       {
         name: 'Livro 01',
         price: 19,
-        total: 10,
+        total: 5,
         category_id: 1,
         created_at: new Date(),
         updated_at: new Date(),

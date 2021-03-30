@@ -2,7 +2,7 @@ module.exports = {
   up: async (queryInterface) => {
     await queryInterface.bulkInsert('stock_products', [
       {
-        quantity: 10,
+        quantity: 5,
         product_id: 1,
         stock_id: 1,
         created_at: new Date(),

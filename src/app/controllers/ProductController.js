@@ -78,9 +78,8 @@ class ProductController {
     try {
       const { id } = request.params;
       const { name, price, category_id } = request.body;
-      const parsed = Number.parseInt(id);
 
-      const product = await Product.findByPk(parsed);
+      const product = await Product.findByPk(Number.parseInt(id));
 
       if (!product) {
         return response.status(404).json({
@@ -93,7 +92,7 @@ class ProductController {
       product.category_id = category_id;
       product.save();
 
-      return response.json(product);
+      return response.sendStatus(202);
     } catch (error) {
       return response.status(error.status || 400).json(error.message);
     }
@@ -102,9 +101,8 @@ class ProductController {
   async delete(request, response) {
     try {
       const { id } = request.params;
-      const parsed = Number.parseInt(id);
 
-      const product = await Product.findByPk(parsed);
+      const product = await Product.findByPk(Number.parseInt(id));
 
       if (!product) {
         return response.status(404).json({
