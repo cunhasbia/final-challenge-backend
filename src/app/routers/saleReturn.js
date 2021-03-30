@@ -3,10 +3,8 @@ import SaleReturnController from '../controllers/SaleReturnController';
 
 const routes = new Router();
 
-routes.get('/saleReturn', SaleReturnController.index);
-routes.get('/saleReturn/:id', SaleReturnController.show);
-routes.post('/saleReturn', SaleReturnController.store);
-// routes.put('/saleReturn/:id', SaleReturnController.update);
-// routes.delete('/saleReturn/:id', SaleReturnController.delete);
+routes.get('/sale-return', SaleReturnController.index);
+routes.get('/sale-return/:id', SaleReturnController.show);
+routes.post('/sale-return', SaleReturnController.store);
 
 export default routes;
