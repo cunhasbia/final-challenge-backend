@@ -1,22 +1,23 @@
 /* eslint-disable radix */
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
+import Sequelize from 'sequelize';
 import Reason from '../models/Reason';
 import Sale from '../models/Sale';
 import SaleReturn from '../models/SaleReturn';
 import Product from '../models/Product';
 import Category from '../models/Category';
-import Sequelize from 'sequelize';
 
 class SaleReturnController {
   async index(request, response) {
     let { type } = request.query;
 
-    if (type == 'products') {
-      type = 'sale.products.name';
-    } else if (type == 'reason') {
+    if (type === 'product') {
+      type = 'sale.product.name';
+    } else if (type === 'reason') {
       type = 'reason.description';
-    } else if (type == 'category') {
-      type = 'sale.products.category.name';
+    } else if (type === 'category') {
+      type = 'sale.product.category.name';
     }
 
     if (!type) {
@@ -31,9 +32,9 @@ class SaleReturnController {
         raw: true,
         group: [
           'sale.id',
-          'sale->products.id',
+          'sale->product.id',
           'reason.id',
-          'sale->products->category.id',
+          'sale->product->category.id',
         ],
         order: Sequelize.literal('total DESC'),
         limit: 1,
@@ -50,7 +51,7 @@ class SaleReturnController {
             include: {
               model: Product,
               required: true,
-              as: 'products',
+              as: 'product',
               attibutes: ['id', 'name'],
               include: {
                 model: Category,
@@ -98,7 +99,7 @@ class SaleReturnController {
       });
 
       if (!returnSale) {
-        return response.status(404).json({ message: 'Return Sale not found' });
+        return response.status(404).json({ message: 'Sale return not found' });
       }
 
       return response.json(returnSale);
@@ -138,7 +139,6 @@ class SaleReturnController {
       }
 
       // verifica se a quantidade devolvida não é maior do que vendida
-
       if (quantity > sale.quantity) {
         return response.status(404).json({ message: 'Quantity invalid' });
       }
