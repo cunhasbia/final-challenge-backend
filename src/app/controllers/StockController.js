@@ -21,8 +21,7 @@ class StockController {
   async show(request, response) {
     try {
       const { id } = request.params;
-      const { page, limit } = request.query;
-      const where = {};
+
       const parsed = Number.parseInt(id);
 
       const stock = await Stock.findByPk(parsed, {
@@ -44,9 +43,6 @@ class StockController {
         //     attributes: ['name'],
         //   },
         // ],
-        where,
-        limit,
-        offset: limit * (page - 1),
       });
 
       // const stock = await Stock.findByPk(parsed, {
@@ -66,6 +62,18 @@ class StockController {
       if (!stock) {
         return response.status(404).json({ message: 'Stock not found' });
       }
+
+      return response.json(stock);
+    } catch (error) {
+      return response.status(error.status || 400).json(error.message);
+    }
+  }
+
+  async store(request, response) {
+    try {
+      const { name } = request.body;
+
+      const stock = await Stock.create({ name });
 
       return response.json(stock);
     } catch (error) {

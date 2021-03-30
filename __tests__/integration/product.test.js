@@ -6,10 +6,14 @@ describe('product', () => {
     it('should create a new product', async () => {
       expect.assertions(2);
 
+      const category = await request(app).post('/category').send({
+        name: 'Tech',
+      });
+
       const response = await request(app).post('/product').send({
-        name: 'Book - Advanced Javascript',
-        price: 55,
-        category_id: 1,
+        name: 'Book10',
+        price: 40,
+        category_id: category.body.id,
       });
 
       expect(response.status).toBe(200);
@@ -48,7 +52,7 @@ describe('product', () => {
       expect.assertions(2);
 
       const response = await request(app).get(
-        '/product?limit=100&page=1&name=Livro%01'
+        '/product?limit=100&page=1&name=Book10'
       );
 
       expect(response.status).toBe(200);
@@ -79,7 +83,7 @@ describe('product', () => {
       expect.assertions(3);
 
       const response = await request(app).put('/product/1').send({
-        name: 'Updated book',
+        name: 'Updated',
         price: 20,
         category_id: 1,
       });
@@ -92,7 +96,7 @@ describe('product', () => {
       expect.assertions(1);
 
       const response = await request(app).put('/product/a').send({
-        name: 'Test',
+        name: 'Updated',
         price: 22,
         category_id: 1,
       });
@@ -103,9 +107,9 @@ describe('product', () => {
     it('should return a error when sending a invalid data to update the product', async () => {
       expect.assertions(1);
 
-      const response = await request(app).put('/product/2').send({
+      const response = await request(app).put('/product/1').send({
         name: '',
-        price: null,
+        price: '',
         category_id: null,
       });
 
