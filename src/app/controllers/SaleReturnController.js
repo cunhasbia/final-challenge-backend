@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable camelcase */
 /* eslint-disable radix */
 /* eslint-disable no-unused-vars */
 import Reason from '../models/Reason';
@@ -7,12 +5,24 @@ import Sale from '../models/Sale';
 import SaleReturn from '../models/SaleReturn';
 import Product from '../models/Product';
 import Category from '../models/Category';
-import StockProduct from '../models/StockProduct';
-// eslint-disable-next-line import/order
 import Sequelize from 'sequelize';
 
 class SaleReturnController {
   async index(request, response) {
+    let { type } = request.query;
+
+    if (type == 'products') {
+      type = 'sale.products.name';
+    } else if (type == 'reason') {
+      type = 'reason.description';
+    } else if (type == 'category') {
+      type = 'sale.products.category.name';
+    }
+
+    if (!type) {
+      return response.status(400).json({ message: 'Invalid params!' });
+    }
+
     try {
       const saleReturn = await SaleReturn.findAll({
         attributes: [
@@ -21,9 +31,9 @@ class SaleReturnController {
         raw: true,
         group: [
           'sale.id',
-          'sale->product.id',
+          'sale->products.id',
           'reason.id',
-          'sale->product->category.id',
+          'sale->products->category.id',
         ],
         order: Sequelize.literal('total DESC'),
         limit: 1,
@@ -40,7 +50,7 @@ class SaleReturnController {
             include: {
               model: Product,
               required: true,
-              as: 'product',
+              as: 'products',
               attibutes: ['id', 'name'],
               include: {
                 model: Category,
@@ -53,7 +63,9 @@ class SaleReturnController {
         ],
       });
 
-      return response.json(saleReturn[0]);
+      return response.json({
+        message: saleReturn[0][type],
+      });
     } catch (error) {
       return response.status(error.status || 400).json(error.message);
     }
@@ -71,7 +83,6 @@ class SaleReturnController {
 
       const returnSale = await SaleReturn.findOne({
         where: { id },
-        // attributes: ['quantity'],
         include: [
           {
             model: Sale,
@@ -81,7 +92,7 @@ class SaleReturnController {
           {
             model: Reason,
             as: 'reason',
-            attributes: ['description'],
+            attributes: ['id'],
           },
         ],
       });
@@ -108,11 +119,11 @@ class SaleReturnController {
       const parsedSale = Number.parseInt(sale_id);
 
       if (Number.isNaN(parsedReason)) {
-        return response.status(400).json({ message: 'Invalid ID' });
+        return response.status(400).json({ message: 'Invalid Reason ID' });
       }
 
       if (Number.isNaN(parsedSale)) {
-        return response.status(400).json({ message: 'Invalid ID' });
+        return response.status(400).json({ message: 'Invalid Sale ID' });
       }
 
       const reason = await Reason.findByPk(reason_id);
@@ -127,57 +138,11 @@ class SaleReturnController {
       }
 
       // verifica se a quantidade devolvida não é maior do que vendida
+
       if (quantity > sale.quantity) {
-        return response
-          .status(400)
-          .json({ Error: `Quantity available for return: ${sale.quantity}` });
+        return response.status(404).json({ message: 'Quantity invalid' });
       }
 
-      // verifica se a quantidade devolvida nao e maior que a soma das devolucoes
-      const verifySaleReturn = await SaleReturn.findAll({
-        attributes: [
-          [Sequelize.fn('sum', Sequelize.col('SaleReturn.quantity')), 'total'],
-        ],
-        where: { sale_id },
-      });
-
-      // criar historico de devolucoes
-      const historySaleReturn = await SaleReturn.findAll({
-        attributes: [
-          ['id', 'Id Sale Return'],
-          ['quantity', 'Quantity returned'],
-        ],
-        where: { sale_id },
-      });
-
-      const sum =
-        sale.quantity - parseInt(verifySaleReturn[0].dataValues.total);
-
-      if (quantity > sum) {
-        return response.status(400).json({
-          Error: `Quantity available for return: ${sum}`,
-          historySaleReturn,
-        });
-      }
-
-      // // devolve a quantidade para o estoque
-      const stockProduct = await StockProduct.findOne({
-        where: { product_id: sale.product_id, stock_id: sale.stock_id },
-      });
-
-      let quantityTotal = stockProduct.quantity;
-      stockProduct.quantity = quantityTotal + quantity;
-      stockProduct.save();
-
-      const product = await Product.findOne({
-        where: { id: sale.product_id },
-      });
-
-      quantityTotal = product.total;
-      product.total = quantityTotal + quantity;
-      product.save();
-
-      // Salva na tabela SaleReturn
       const saleReturn = await SaleReturn.create({
         quantity,
         reason_id,
