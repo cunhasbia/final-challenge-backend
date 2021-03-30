@@ -45,7 +45,7 @@ class ReasonController {
           },
           {
             model: Product,
-            as: 'product',
+            as: 'products',
             attributes: ['name'],
           },
           {

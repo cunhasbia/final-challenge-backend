@@ -16,7 +16,7 @@ class Sale extends Model {
 
   static associate(models) {
     this.belongsTo(models.Product, {
-      as: 'product',
+      as: 'products',
       foreignKey: 'product_id',
     });
 

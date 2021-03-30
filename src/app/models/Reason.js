@@ -19,7 +19,7 @@ class Reason extends Model {
       as: 'sale_return',
     });
     this.hasMany(models.Product, {
-      as: 'product',
+      as: 'products',
       foreignKey: 'id',
     });
     this.hasMany(models.Category, {

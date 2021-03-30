@@ -38,7 +38,7 @@ class CategoryController {
         include: [
           {
             model: Product,
-            as: 'product',
+            as: 'products',
             attributes: ['id', 'name'],
           },
         ],

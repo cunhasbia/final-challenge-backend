@@ -1,11 +1,12 @@
+/* eslint-disable camelcase */
 /* eslint-disable radix */
 /* eslint-disable no-unused-vars */
+import Sequelize from 'sequelize';
 import Reason from '../models/Reason';
 import Sale from '../models/Sale';
 import SaleReturn from '../models/SaleReturn';
 import Product from '../models/Product';
 import Category from '../models/Category';
-import Sequelize from 'sequelize';
 
 class SaleReturnController {
   async index(request, response) {
