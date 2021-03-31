@@ -96,7 +96,7 @@ class StockProductController {
         stockProduct.save();
       }
 
-      return response.json({ stockProduct });
+      return response.json(stockProduct);
     } catch (error) {
       return response.status(error.status || 400).json(error.message);
     }

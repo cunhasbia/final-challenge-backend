@@ -6,9 +6,9 @@ describe('category', () => {
     it('should create a new category', async () => {
       expect.assertions(2);
 
-      const response = await request(app)
-        .post('/category')
-        .send({ name: 'Recipes' });
+      const response = await request(app).post('/category').send({
+        name: 'Science',
+      });
 
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('id');
@@ -44,7 +44,7 @@ describe('category', () => {
       expect.assertions(2);
 
       const response = await request(app).get(
-        '/category?limit=100&page=1&name=Technology'
+        '/category?limit=100&page=1&name=Science'
       );
 
       expect(response.status).toBe(200);
