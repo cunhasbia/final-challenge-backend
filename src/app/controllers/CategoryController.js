@@ -1,5 +1,4 @@
 /* eslint-disable radix */
-/* eslint-disable no-unused-vars */
 import Category from '../models/Category';
 import Product from '../models/Product';
 
@@ -61,7 +60,7 @@ class CategoryController {
       const { name } = request.body;
 
       if (!name) {
-        return response.status(404).json({ message: 'Invalid data' });
+        return response.status(400).json({ message: 'Invalid data' });
       }
 
       const category = await Category.create({ name });
