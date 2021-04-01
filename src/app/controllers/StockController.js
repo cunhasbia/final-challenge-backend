@@ -73,6 +73,10 @@ class StockController {
     try {
       const { name } = request.body;
 
+      if (!name) {
+        return response.status(400).json({ message: 'Invalid data' });
+      }
+
       const stock = await Stock.create({ name });
 
       return response.json(stock);

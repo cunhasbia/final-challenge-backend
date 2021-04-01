@@ -3,7 +3,7 @@ import app from '../../src/app';
 
 describe('reason', () => {
   describe('store', () => {
-    it('should create a return reason in database', async () => {
+    it('should be able to create a return reason', async () => {
       expect.assertions(2);
 
       const response = await request(app).post('/reason').send({
@@ -13,14 +13,14 @@ describe('reason', () => {
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('id');
     });
-    it('should return a error when send a invalid data to create a return reason', async () => {
+    it('should not be able to create a return reason', async () => {
       expect.assertions(1);
 
       const response = await request(app).post('/reason').send({
         description: '',
       });
 
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(400);
     });
   });
 
@@ -32,10 +32,17 @@ describe('reason', () => {
 
       expect(response.status).toBe(200);
     });
+    it('should not be able to list all return reasons when sending invalid data as pagination', async () => {
+      expect.assertions(1);
+
+      const response = await request(app).get('/reason?limit=a&page=a');
+
+      expect(response.status).toBe(400);
+    });
   });
 
   describe('show', () => {
-    it('should show a return reason by id passed as parameter', async () => {
+    it('should show a return reason when sending id as parameter', async () => {
       expect.assertions(2);
 
       const response = await request(app).get('/reason/1?limit=100&page=1');
@@ -43,7 +50,7 @@ describe('reason', () => {
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('id');
     });
-    it('should return a error when sending a invalid data as id param', async () => {
+    it('should not be able to show a return reason when sending a string as id param', async () => {
       expect.assertions(1);
 
       const response = await request(app).get('/reason/a?limit=100&page=1');

@@ -38,7 +38,7 @@ describe('saleReturn', () => {
 
       expect(response.status).toBe(200);
     });
-    it('should not be able to create a new sale return', async () => {
+    it('should not be able to create a new sale return when sending invalid data', async () => {
       expect.assertions(1);
 
       const response = await request(app).post('/sale-return').send({
@@ -52,14 +52,14 @@ describe('saleReturn', () => {
   });
 
   describe('index', () => {
-    it('should list all return reasons, filtering by category or product', async () => {
+    it('should list all sales returns, filtering by category or product', async () => {
       expect.assertions(1);
 
       const response = await request(app).get('/sale-return?type=category');
 
       expect(response.status).toBe(200);
     });
-    it('should not be able to list all return reasons', async () => {
+    it('should not be able to list all sales returns', async () => {
       expect.assertions(1);
 
       const response = await request(app).get('/sale-return');
@@ -69,7 +69,7 @@ describe('saleReturn', () => {
   });
 
   describe('show', () => {
-    it('should show a specific sale return when send id as route param', async () => {
+    it('should show a specific sale return when sending id as parameter', async () => {
       expect.assertions(2);
 
       const response = await request(app).get('/sale-return/1');
@@ -77,7 +77,7 @@ describe('saleReturn', () => {
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('id');
     });
-    it('should not be able to show a sale return when send invalid data as id param', async () => {
+    it('should not be able to show a sale return when sending a string as id parameter', async () => {
       expect.assertions(1);
 
       const response = await request(app).get('/sale-return/a');

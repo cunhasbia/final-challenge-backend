@@ -1,5 +1,4 @@
 /* eslint-disable radix */
-/* eslint-disable no-unused-vars */
 import Category from '../models/Category';
 import Product from '../models/Product';
 
@@ -49,6 +48,22 @@ class CategoryController {
       if (!category) {
         return response.status(404).json({ message: 'Category not found' });
       }
+
+      return response.json(category);
+    } catch (error) {
+      return response.status(error.status || 400).json(error.message);
+    }
+  }
+
+  async store(request, response) {
+    try {
+      const { name } = request.body;
+
+      if (!name) {
+        return response.status(400).json({ message: 'Invalid data' });
+      }
+
+      const category = await Category.create({ name });
 
       return response.json(category);
     } catch (error) {

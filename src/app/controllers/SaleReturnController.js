@@ -33,9 +33,9 @@ class SaleReturnController {
         raw: true,
         group: [
           'sale.id',
-          'sale->product.id',
+          'sale->products.id',
           'reason.id',
-          'sale->product->category.id',
+          'sale->products->category.id',
         ],
         order: Sequelize.literal('total DESC'),
         limit: 1,
@@ -52,7 +52,7 @@ class SaleReturnController {
             include: {
               model: Product,
               required: true,
-              as: 'product',
+              as: 'products',
               attibutes: ['id', 'name'],
               include: {
                 model: Category,

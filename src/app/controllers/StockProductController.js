@@ -177,7 +177,7 @@ class StockProductController {
 
       stockProduct.destroy();
 
-      return response.sendStatus(202);
+      return response.sendStatus(204);
     } catch (error) {
       return response.status(error.status || 400).json(error.message);
     }

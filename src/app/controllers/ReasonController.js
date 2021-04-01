@@ -1,5 +1,4 @@
 /* eslint-disable radix */
-/* eslint-disable no-unused-vars */
 import Reason from '../models/Reason';
 import SaleReturn from '../models/SaleReturn';
 import Product from '../models/Product';
@@ -33,6 +32,7 @@ class ReasonController {
       const { id } = request.params;
       const { page, limit } = request.query;
       const where = {};
+
       const parsed = Number.parseInt(id);
 
       const reason = await Reason.findByPk(parsed, {
@@ -74,7 +74,7 @@ class ReasonController {
       const { description } = request.body;
 
       if (!description) {
-        return response.status(404).json({ message: 'Invalid data' });
+        return response.status(400).json({ message: 'Invalid data' });
       }
 
       const reason = await Reason.create({ description });

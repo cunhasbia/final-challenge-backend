@@ -3,13 +3,12 @@ import app from '../../src/app';
 
 describe('product', () => {
   describe('store', () => {
-    it('should create a new product', async () => {
+    it('should be able to create a new product', async () => {
       expect.assertions(2);
 
       const category = await request(app).post('/category').send({
         name: 'Tech',
       });
-
       const response = await request(app).post('/product').send({
         name: 'Book10',
         price: 40,
@@ -19,7 +18,7 @@ describe('product', () => {
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('id');
     });
-    it('should return a error when send a invalid data to create a product', async () => {
+    it('should not be able to create a new product when sending a invalid data', async () => {
       expect.assertions(1);
 
       const response = await request(app).post('/product').send({
@@ -41,27 +40,26 @@ describe('product', () => {
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('count');
     });
-    it('should return a error when send invalid data as pagination', async () => {
+    it('should be able to filter a product by name', async () => {
       expect.assertions(1);
-
-      const response = await request(app).get('/product?limit=a&page=b');
-
-      expect(response.status).toBe(400);
-    });
-    it('should filter a product by name', async () => {
-      expect.assertions(2);
 
       const response = await request(app).get(
         '/product?limit=100&page=1&name=Book10'
       );
 
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('count');
+    });
+    it('should not be able to list all products when sending invalid data as pagination', async () => {
+      expect.assertions(1);
+
+      const response = await request(app).get('/product?limit=a&page=b');
+
+      expect(response.status).toBe(400);
     });
   });
 
   describe('show', () => {
-    it('should show a product with the id passed as parameter', async () => {
+    it('should show a product when sending id as parameter', async () => {
       expect.assertions(2);
 
       const response = await request(app).get('/product/1?limit=100&page=1');
@@ -69,7 +67,7 @@ describe('product', () => {
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('id');
     });
-    it('should return a error when sending a invalid data as id param', async () => {
+    it('should not be able to show a product when sending a string as id parameter', async () => {
       expect.assertions(1);
 
       const response = await request(app).get('/product/a?limit=100&page=1');
@@ -92,19 +90,18 @@ describe('product', () => {
       expect(response.body).toHaveProperty('id');
       expect(response.body).toHaveProperty('name');
     });
-    it('should return a error when sending a invalid data as id param', async () => {
+    it('should not update a product when sending a string as id parameter', async () => {
       expect.assertions(1);
 
       const response = await request(app).put('/product/a').send({
         name: 'Updated',
-        price: 22,
+        price: 20,
         category_id: 1,
       });
 
       expect(response.status).toBe(400);
     });
-
-    it('should return a error when sending a invalid data to update the product', async () => {
+    it('should not update a product when sending a invalid data to update', async () => {
       expect.assertions(1);
 
       const response = await request(app).put('/product/1').send({
@@ -118,12 +115,12 @@ describe('product', () => {
   });
 
   describe('delete', () => {
-    it('should delete a product from the database', async () => {
+    it('should be able to delete a product', async () => {
       expect.assertions(1);
 
       const response = await request(app).delete('/product/1');
 
-      expect(response.status).toBe(202);
+      expect(response.status).toBe(204);
     });
   });
 });
