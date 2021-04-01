@@ -8,13 +8,13 @@
 
 This is the final back-end challenge delivered to Growdev, using all the technologies learned.
 
-## 💡 Undestanding the problem:
+## 💡 Undestanding the problem
 
-The customer needs to **control their stocks, sales, and sales return**. Today he doesn't know which category or which product has a higher return. Often, when starting a sale, it is not known whether the product is in stock. Therefore, the customer set up 3 stocks in different places and if one stock doesn't have the product to sell, it can pick up the nearest one, if it has this permission.
+The customer needs to **control their stocks, sales, and sales return**. Today he doesn't know **which category or which product has a higher return**. Often, when starting a sale, he doesn't known whether the product is in stock. Therefore, the customer set up 3 stocks in different places and if one stock doesn't have the product to sell, **he can pick up the nearest one**, if have this permission.
 
 ## 💻 The project
 
-We developed an API in order to propose a solution that meets the needs of the client. In it, the customer is able to control his stock of products, his sales and sale returns, respecting his business rules.
+**We developed an API in order to propose a solution that meets the needs of the client**. In it, the customer is able to control his stock of products, his sales and sales return, respecting his business rules.
 
 The API documentation is available in Swagger, <a href="">click here to access</a>.
 
@@ -97,4 +97,5 @@ $ yarn dev
 </table>
 
 <hr>
+
 Starter Program - 3rd edition | Growdev
