@@ -78,14 +78,13 @@ class ProductController {
     try {
       const { id } = request.params;
       const { name, price, category_id } = request.body;
+
       const parsed = Number.parseInt(id);
 
       const product = await Product.findByPk(parsed);
 
       if (!product) {
-        return response.status(404).json({
-          message: 'Product not found',
-        });
+        return response.status(404).json({ message: 'Product not found' });
       }
 
       product.name = name;
@@ -103,17 +102,15 @@ class ProductController {
     try {
       const { id } = request.params;
       const parsed = Number.parseInt(id);
-
       const product = await Product.findByPk(parsed);
 
       if (!product) {
-        return response.status(404).json({
-          message: 'Product not found',
-        });
+        return response.status(404).json({ message: 'Product not found' });
       }
 
       product.destroy();
-      return response.sendStatus(202);
+
+      return response.sendStatus(204);
     } catch (error) {
       return response.status(error.status || 400).json(error.message);
     }
