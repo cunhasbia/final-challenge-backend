@@ -100,7 +100,7 @@ describe('stockProduct', () => {
         stock_id: 1,
       });
 
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(400);
     });
     it('should not be able to update a stock product when sending a invalid data to update', async () => {
       expect.assertions(1);
