@@ -72,6 +72,10 @@ class StockController {
   async store(request, response) {
     try {
       const { name } = request.body;
+      
+      if (!name) {
+        return response.status(400).json({ message: 'Invalid data' });
+      }
 
       const stock = await Stock.create({ name });
 
