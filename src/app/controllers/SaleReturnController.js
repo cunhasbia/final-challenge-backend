@@ -8,6 +8,7 @@ import Sale from '../models/Sale';
 import SaleReturn from '../models/SaleReturn';
 import Product from '../models/Product';
 import Category from '../models/Category';
+import StockProduct from '../models/StockProduct';
 
 class SaleReturnController {
   async index(request, response) {
@@ -121,11 +122,11 @@ class SaleReturnController {
       const parsedSale = Number.parseInt(sale_id);
 
       if (Number.isNaN(parsedReason)) {
-        return response.status(400).json({ message: 'Invalid Reason ID' });
+        return response.status(400).json({ message: 'Invalid ID' });
       }
 
       if (Number.isNaN(parsedSale)) {
-        return response.status(400).json({ message: 'Invalid Sale ID' });
+        return response.status(400).json({ message: 'Invalid ID' });
       }
 
       const reason = await Reason.findByPk(reason_id);
@@ -141,9 +142,56 @@ class SaleReturnController {
 
       // verifica se a quantidade devolvida não é maior do que vendida
       if (quantity > sale.quantity) {
-        return response.status(404).json({ message: 'Quantity invalid' });
+        return response
+          .status(400)
+          .json({ Error: `Quantity available for return: ${sale.quantity}` });
       }
 
+      // verifica se a quantidade devolvida nao e maior que a soma das devolucoes
+      const verifySaleReturn = await SaleReturn.findAll({
+        attributes: [
+          [Sequelize.fn('sum', Sequelize.col('SaleReturn.quantity')), 'total'],
+        ],
+        where: { sale_id },
+      });
+
+      // criar historico de devolucoes
+      const historySaleReturn = await SaleReturn.findAll({
+        attributes: [
+          ['id', 'Id Sale Return'],
+          ['quantity', 'Quantity returned'],
+        ],
+        where: { sale_id },
+      });
+
+      const sum =
+        sale.quantity - parseInt(verifySaleReturn[0].dataValues.total);
+
+      if (quantity > sum) {
+        return response.status(400).json({
+          Error: `Quantity available for return: ${sum}`,
+          historySaleReturn,
+        });
+      }
+
+      // // devolve a quantidade para o estoque
+      const stockProduct = await StockProduct.findOne({
+        where: { product_id: sale.product_id, stock_id: sale.stock_id },
+      });
+
+      let quantityTotal = stockProduct.quantity;
+      stockProduct.quantity = quantityTotal + quantity;
+      stockProduct.save();
+
+      const product = await Product.findOne({
+        where: { id: sale.product_id },
+      });
+
+      quantityTotal = product.total;
+      product.total = quantityTotal + quantity;
+      product.save();
+
+      // Salva na tabela SaleReturn
       const saleReturn = await SaleReturn.create({
         quantity,
         reason_id,
