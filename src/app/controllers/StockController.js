@@ -1,5 +1,6 @@
 /* eslint-disable radix */
 /* eslint-disable no-unused-vars */
+
 import Stock from '../models/Stock';
 import Product from '../models/Product';
 import Category from '../models/Category';
@@ -22,42 +23,24 @@ class StockController {
     try {
       const { id } = request.params;
 
-      const parsed = Number.parseInt(id);
-
-      const stock = await Stock.findByPk(parsed, {
-        attributes: ['id', 'name'],
+      const stock = await StockProduct.findAll({
+        where: {
+          stock_id: Number.parseInt(id),
+        },
+        attributes: ['id', 'quantity'],
         include: [
           {
-            model: StockProduct,
-            as: 'stock',
-            attributes: ['id'],
-            required: true,
+            model: Product,
+            as: 'product_stock',
+            attributes: ['name', 'total'],
           },
-
-          // { model: Product, as: 'products', attributes: ['id'] },
+          {
+            model: Stock,
+            as: 'stock',
+            attributes: ['name'],
+          },
         ],
-        // include: [
-        //   {
-        //     model: Product,
-        //     as: 'product',
-        //     attributes: ['name'],
-        //   },
-        // ],
       });
-
-      // const stock = await Stock.findByPk(parsed, {
-      //   attributes: ['id', 'name'],
-      //   include: [
-      //     {
-      //       model: Product,
-      //       as: 'products',
-      //       attributes: ['name'],
-      //     },
-      //   ],
-      //   where,
-      //   limit,
-      //   offset: limit * (page - 1),
-      // });
 
       if (!stock) {
         return response.status(404).json({ message: 'Stock not found' });
