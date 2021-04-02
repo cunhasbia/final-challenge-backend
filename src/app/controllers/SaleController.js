@@ -58,8 +58,6 @@ class SaleController {
     }
   }
 
-  // Falta especificar de qual estoque deverá ser retirado
-  // os produtos e qual o estoque mais próximo
   async store(request, response) {
     try {
       const { quantity, product_id, stock_id } = request.body;
