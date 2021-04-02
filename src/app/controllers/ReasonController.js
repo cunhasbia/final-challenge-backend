@@ -33,9 +33,7 @@ class ReasonController {
       const { page, limit } = request.query;
       const where = {};
 
-      const parsed = Number.parseInt(id);
-
-      const reason = await Reason.findByPk(parsed, {
+      const reason = await Reason.findByPk(Number.parseInt(id), {
         attributes: ['id', 'description'],
         include: [
           {

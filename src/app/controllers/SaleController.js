@@ -23,9 +23,7 @@ class SaleController {
     try {
       const { id } = request.params;
 
-      const parsed = Number.parseInt(id);
-
-      if (Number.isNaN(parsed)) {
+      if (Number.isNaN(Number.parseInt(id))) {
         return response.status(400).json({ message: 'Invalid ID' });
       }
 
@@ -66,15 +64,11 @@ class SaleController {
         return response.status(400).json({ message: 'Invalid data' });
       }
 
-      const parsedProduct = Number.parseInt(product_id);
-
-      if (Number.isNaN(parsedProduct)) {
+      if (Number.isNaN(Number.parseInt(product_id))) {
         return response.status(400).json({ message: 'Invalid ID' });
       }
 
-      const parsedStock = Number.parseInt(stock_id);
-
-      if (Number.isNaN(parsedStock)) {
+      if (Number.isNaN(Number.parseInt(stock_id))) {
         return response.status(400).json({ message: 'Invalid ID' });
       }
 
@@ -89,7 +83,8 @@ class SaleController {
         return response.status(404).json({ message: 'Stock not found' });
       }
 
-      const all = await StockProduct.findAll({
+      // Criar historico para retorno de erro
+      const verifyStock = await StockProduct.findAll({
         where: {
           product_id,
           quantity: {
@@ -112,7 +107,7 @@ class SaleController {
       });
 
       if (product.total < quantity) {
-        return response.status(404).json({ 'Qtde indisponível': all });
+        return response.status(404).json({ 'Qtde indisponível': verifyStock });
       }
 
       // consulta nas tabelas para fazer a venda
@@ -129,9 +124,9 @@ class SaleController {
 
       // ENTRA NO PRIMEIRO ESTOQUE PRÓXIMO
       if (stockProduct.quantity < quantity) {
-        console.log(
-          `-> ############ entrou verificação 1 ${stockProduct.stock_id}`
-        );
+        // console.log(
+        //   `-> ############ entrou verificação 1 ${stockProduct.stock_id}`
+        // );
         const stockPrincipal = await StockNearby.findByPk(stock_id);
 
         stockProduct = await StockProduct.findOne({
@@ -143,10 +138,9 @@ class SaleController {
 
         // ENTRA NO SEGUNDO ESTOQUE PRÓXIMO
         if (!stockProduct || stockProduct.quantity < quantity) {
-          console.log('entrou verificação 2');
+          // console.log('entrou verificação 2');
           const value = stockPrincipal.stock_nearby_id;
 
-          // const ultimoStockId = ;
           stockProduct = await StockProduct.findOne({
             where: {
               product_id,
@@ -155,21 +149,26 @@ class SaleController {
           });
 
           if (!stockProduct) {
-            return response.json({ Error: 'sem produto no estoque!' });
+            return response.json({ Error: 'Empty stock!' });
           }
 
+          // salva a venda
           const sale = await Sale.create({
             quantity,
             product_id,
             stock_id: stockProduct.stock_id,
           });
+
+          // atualiza o estoque geral
           const quantityTotal = product.total;
           product.total = quantityTotal - quantity;
           product.save();
 
+          // atualiza o estoque local
           const stockTotal = stockProduct.quantity;
           stockProduct.quantity = stockTotal - quantity;
           stockProduct.save();
+
           return response.json(sale);
         }
 

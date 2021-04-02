@@ -15,11 +15,11 @@ class SaleReturnController {
     let { type } = request.query;
 
     if (type === 'product') {
-      type = 'sale.product.name';
+      type = 'sale.products.name';
     } else if (type === 'reason') {
       type = 'reason.description';
     } else if (type === 'category') {
-      type = 'sale.product.category.name';
+      type = 'sale.products.category.name';
     }
 
     if (!type) {
@@ -78,9 +78,7 @@ class SaleReturnController {
     try {
       const { id } = request.params;
 
-      const parsed = Number.parseInt(id);
-
-      if (Number.isNaN(parsed)) {
+      if (Number.isNaN(Number.parseInt(id))) {
         return response.status(400).json({ message: 'Invalid ID' });
       }
 
@@ -118,24 +116,20 @@ class SaleReturnController {
         return response.status(400).json({ message: 'Invalid data' });
       }
 
-      const parsedReason = Number.parseInt(reason_id);
-      const parsedSale = Number.parseInt(sale_id);
-
-      if (Number.isNaN(parsedReason)) {
+      if (Number.isNaN(Number.parseInt(reason_id))) {
         return response.status(400).json({ message: 'Invalid ID' });
       }
 
-      if (Number.isNaN(parsedSale)) {
+      if (Number.isNaN(Number.parseInt(sale_id))) {
         return response.status(400).json({ message: 'Invalid ID' });
       }
 
       const reason = await Reason.findByPk(reason_id);
-      const sale = await Sale.findByPk(sale_id);
-
       if (!reason) {
         return response.status(404).json({ message: 'Reason not found' });
       }
 
+      const sale = await Sale.findByPk(sale_id);
       if (!sale) {
         return response.status(404).json({ message: 'Sale not found' });
       }
@@ -155,7 +149,7 @@ class SaleReturnController {
         where: { sale_id },
       });
 
-      // criar historico de devolucoes
+      // criar historico de devolucoes para informar no retorno
       const historySaleReturn = await SaleReturn.findAll({
         attributes: [
           ['id', 'Id Sale Return'],
