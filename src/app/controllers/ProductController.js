@@ -14,7 +14,7 @@ class ProductController {
       }
 
       const products = await Product.findAndCountAll({
-        attributes: ['id', 'name', 'price', 'total'],
+        attributes: ['id', 'name'],
         where,
         limit,
         offset: limit * (page - 1),

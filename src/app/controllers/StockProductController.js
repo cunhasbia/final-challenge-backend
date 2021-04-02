@@ -12,7 +12,7 @@ class StockProductController {
       const stockProduct = await StockProduct.findAll({
         attributes: ['id', 'quantity'],
         include: [
-          { model: Product, as: 'product_stock', attributes: ['id', 'name'] },
+          { model: Product, as: 'product', attributes: ['name'] },
           { model: Stock, as: 'stock', attributes: ['name'] },
         ],
         limit,
@@ -38,8 +38,8 @@ class StockProductController {
       const stockProduct = await StockProduct.findByPk(parsed, {
         attributes: ['id', 'quantity'],
         include: [
-          { model: Product, as: 'product_stock', attributes: ['name'] },
-          { model: Stock, as: 'stock', attributes: ['name'] },
+          { model: Product, as: 'product', attributes: ['id', 'name'] },
+          { model: Stock, as: 'stock', attributes: ['id', 'name'] },
         ],
       });
 
