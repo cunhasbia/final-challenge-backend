@@ -3,7 +3,6 @@
 
 import Stock from '../models/Stock';
 import Product from '../models/Product';
-import Category from '../models/Category';
 import StockProduct from '../models/StockProduct';
 
 class StockController {
@@ -23,6 +22,12 @@ class StockController {
     try {
       const { id } = request.params;
 
+      const checkStock = await Stock.findByPk(id);
+
+      if (!checkStock) {
+        return response.status(404).json({ message: 'Stock not found' });
+      }
+
       const stock = await StockProduct.findAll({
         where: {
           stock_id: Number.parseInt(id),
@@ -30,21 +35,17 @@ class StockController {
         attributes: ['id', 'quantity'],
         include: [
           {
-            model: Product,
-            as: 'product_stock',
-            attributes: ['name', 'total'],
-          },
-          {
             model: Stock,
             as: 'stock',
             attributes: ['name'],
           },
+          {
+            model: Product,
+            as: 'product',
+            attributes: ['name', 'total'],
+          },
         ],
       });
-
-      if (!stock) {
-        return response.status(404).json({ message: 'Stock not found' });
-      }
 
       return response.json(stock);
     } catch (error) {

@@ -1,8 +1,6 @@
 /* eslint-disable radix */
 import Reason from '../models/Reason';
-import SaleReturn from '../models/SaleReturn';
 import Product from '../models/Product';
-import Category from '../models/Category';
 
 class ReasonController {
   async index(request, response) {
@@ -37,18 +35,8 @@ class ReasonController {
         attributes: ['id', 'description'],
         include: [
           {
-            model: SaleReturn,
-            as: 'sale_return',
-            attributes: ['quantity'],
-          },
-          {
             model: Product,
             as: 'products',
-            attributes: ['name'],
-          },
-          {
-            model: Category,
-            as: 'category',
             attributes: ['name'],
           },
         ],
