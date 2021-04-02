@@ -13,6 +13,7 @@ describe('category', () => {
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('id');
     });
+
     it('should not be able to create a new category when sending invalid data', async () => {
       expect.assertions(1);
 

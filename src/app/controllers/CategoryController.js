@@ -30,9 +30,7 @@ class CategoryController {
       const { id } = request.params;
       const { page, limit } = request.query;
 
-      const parsed = Number.parseInt(id);
-
-      const category = await Category.findByPk(parsed, {
+      const category = await Category.findByPk(Number.parseInt(id), {
         attributes: ['id', 'name'],
         include: [
           {
