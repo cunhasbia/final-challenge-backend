@@ -78,7 +78,7 @@ describe('product', () => {
 
   describe('update', () => {
     it('should update a product', async () => {
-      expect.assertions(3);
+      expect.assertions(1);
 
       const response = await request(app).put('/product/1').send({
         name: 'Updated',
@@ -86,9 +86,7 @@ describe('product', () => {
         category_id: 1,
       });
 
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('id');
-      expect(response.body).toHaveProperty('name');
+      expect(response.status).toBe(204);
     });
     it('should not update a product when sending a string as id parameter', async () => {
       expect.assertions(1);
