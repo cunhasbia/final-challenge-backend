@@ -41,7 +41,7 @@ class StockController {
           },
           {
             model: Product,
-            as: 'product',
+            as: 'product_stock',
             attributes: ['name', 'total'],
           },
         ],
