@@ -6,7 +6,7 @@
 ![Sequelize](https://img.shields.io/badge/-SequelizeORM-black?style=flat-square&logo=sequelize)
 ![Swagger](https://img.shields.io/badge/-Swagger-black?style=flat-square&logo=swagger)
 
-This is the final back-end challenge delivered to Growdev, using all the technologies learned during classes.
+This is the final back-end challenge (an API to control products, stocks and sales) delivered to Growdev, using all the technologies learned during classes.
 
 ## 💡 Undestanding the problem
 
@@ -61,7 +61,7 @@ $ yarn dev
 ```
 
 <p align="center">
-  <a href="https://github.com/cunhasbia/final-challenge-backend/blob/main/Workspace_Insomnia" target="_blank">
+  <a href="https://github.com/cunhasbia/final-challenge-backend/blob/main/workspace_insomnia" target="_blank">
     Click here to use the Insomnia workspace and access the routes.
   </a>
 </p>
