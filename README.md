@@ -6,7 +6,7 @@
 ![Sequelize](https://img.shields.io/badge/-SequelizeORM-black?style=flat-square&logo=sequelize)
 ![Swagger](https://img.shields.io/badge/-Swagger-black?style=flat-square&logo=swagger)
 
-This is the final back-end challenge delivered to Growdev, using all the technologies learned.
+This is the final back-end challenge delivered to Growdev, using all the technologies learned during classes.
 
 ## 💡 Undestanding the problem
 
@@ -15,8 +15,7 @@ The customer needs to **control their stocks, sales, and sales return**. Today h
 ## 💻 The project
 
 **We developed an API in order to propose a solution that meets the needs of the client**. In it, the customer is able to control his stock of products, his sales and sales return, respecting his business rules.
-
-The API documentation is available in Swagger, <a href="">click here to access</a>.
+The API documentation is available on Swagger.
 
 ### 🔍 Database model
 
@@ -37,8 +36,7 @@ The API documentation is available in Swagger, <a href="">click here to access</
 
 ## 🚀 How to run the project?
 
-Before start, install [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/) and [Yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable) on your machine.<br>
-Moreover, recommend use the [VSCode](https://code.visualstudio.com/) terminal.
+Before start, install [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/) and [Yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable) on your machine. Moreover, recommend use the [VSCode](https://code.visualstudio.com/) terminal.
 
 ```bash
 # Clone this repository
@@ -50,9 +48,23 @@ $ cd final-challenge-backend
 # Install dependencies
 $ yarn
 
+# Run migrations to database
+$ yarn sequelize db:migrate
+
+# Run seeds, to insert information into the database
+$ yarn sequelize db:seed:all
+
 # Run
 $ yarn dev
+
+# The API will be running on port 3333
 ```
+
+<p align="center">
+  <a href="https://github.com/cunhasbia/final-challenge-backend/blob/main/Workspace_Insomnia" target="_blank">
+    Click here to use the Insomnia workspace and access the routes.
+  </a>
+</p>
 
 ## 👩‍💻 Authors/Team  
 <table>
