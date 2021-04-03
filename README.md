@@ -8,14 +8,19 @@
 
 This is the final back-end challenge (an API to control products, stocks and sales) delivered to Growdev, using all the technologies learned during classes.
 
-## 💡 Undestanding the problem
+## 💡 Understanding the problem
 
-The customer needs to **control their stocks, sales, and sales return**. Today he doesn't know **which category or which product has a higher return**. Often, when starting a sale, he doesn't known whether the product is in stock. Therefore, the customer set up 3 stocks in different places and if one stock doesn't have the product to sell, **he can pick up the nearest one**, if have this permission.
+The customer needs to **control their stocks, sales, and sales return**. Today, he doesn't know **which category or which product is most returned**. Often, when starting a sale, he doesn't known whether the product is in stock. Therefore, the customer set up 3 stocks in different places and if one stock doesn't have the product to sell, **he can pick up the nearest one**, if has this permission.
 
 ## 💻 The project
 
-**We developed an API in order to propose a solution that meets the needs of the client**. In it, the customer is able to control his stock of products, his sales and sales return, respecting his business rules.
-The API documentation is available on Swagger.
+**We developed an API in order to propose a solution that meets the needs of the client**. In it, the customer is able to control his stock of products, his sales and sales 
+return, respecting his business rules.
+
+✔️ Tests running<br>
+✔️ Documentation<br>
+✔️ Migrations/Models<br>
+✔️ Running on Heroku<br>
 
 ### 🔍 Database model
 
