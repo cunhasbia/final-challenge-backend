@@ -1,0 +1,950 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Books e-commerce",
+    "version": "1.0.0",
+    "title": "API E-commerce Documentation"
+  },
+  "host": "localhost:3333",
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/category": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "Nome da categoria",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "obj",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/obj"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/category/{id}": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/product": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "Nome do livro",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "obj",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/obj_1"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/product/{id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "obj",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/obj_2"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/reason": {
+      "get": {
+        "tags": [
+          "Reasons"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "Descrição do motivo",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reasons"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "obj",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/obj_3"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/reason/{id}": {
+      "get": {
+        "tags": [
+          "Reasons"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/sale": {
+      "get": {
+        "tags": [
+          "Sales"
+        ],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Sales"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "product",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "obj",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/obj_4"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/sale/{id}": {
+      "get": {
+        "tags": [
+          "Sales"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/sale-return": {
+      "get": {
+        "tags": [
+          "Return"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Return"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "product",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "obj",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/obj_5"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/sale-return/{id}": {
+      "get": {
+        "tags": [
+          "Return"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/stock": {
+      "get": {
+        "tags": [
+          "Stocks"
+        ],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Stocks"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "obj",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/obj_6"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/stock/{id}": {
+      "get": {
+        "tags": [
+          "Stocks"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/stock-product": {
+      "get": {
+        "tags": [
+          "Products in stock"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products in stock"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "product",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "obj",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/obj_7"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/stock-product/{id}": {
+      "get": {
+        "tags": [
+          "Products in stock"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products in stock"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "obj",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/obj_8"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products in stock"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "description": "JWT Token",
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "ID"
+        },
+        "name": {
+          "type": "string",
+          "example": "Nome"
+        }
+      }
+    },
+    "product": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "ID"
+        },
+        "name": {
+          "type": "string",
+          "example": "Nome"
+        },
+        "price": {
+          "type": "string",
+          "example": "Preço"
+        },
+        "total": {
+          "type": "string",
+          "example": "Quantidade"
+        }
+      }
+    },
+    "reason": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "ID"
+        },
+        "description": {
+          "type": "string",
+          "example": "Motivo"
+        }
+      }
+    },
+    "sale": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "ID"
+        },
+        "name": {
+          "type": "string",
+          "example": "Nome"
+        },
+        "quantity": {
+          "type": "string",
+          "example": "Quantidade"
+        }
+      }
+    },
+    "saleReturn": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "ID"
+        },
+        "name": {
+          "type": "string",
+          "example": "Nome"
+        },
+        "description": {
+          "type": "string",
+          "example": "Motivo"
+        }
+      }
+    },
+    "stock": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "ID"
+        },
+        "name": {
+          "type": "string",
+          "example": "Nome"
+        }
+      }
+    },
+    "stockProduct": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "ID"
+        },
+        "name": {
+          "type": "string",
+          "example": "Nome"
+        },
+        "quantity": {
+          "type": "string",
+          "example": "Quantidade"
+        }
+      }
+    },
+    "obj": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Suspense"
+        }
+      }
+    },
+    "obj_1": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Trono de Vidro"
+        },
+        "price": {
+          "type": "string",
+          "example": "R$ 46,00"
+        },
+        "category_id": {
+          "type": "string",
+          "example": "Fantasia"
+        }
+      }
+    },
+    "obj_2": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Trono de Vidro"
+        },
+        "price": {
+          "type": "string",
+          "example": "R$ 46,00"
+        },
+        "category_id": {
+          "type": "string",
+          "example": "Fantasia"
+        }
+      }
+    },
+    "obj_3": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "example": "Livro danificado"
+        }
+      }
+    },
+    "obj_4": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "string",
+          "example": "1"
+        },
+        "product_id": {
+          "type": "string",
+          "example": "5"
+        },
+        "stock_id": {
+          "type": "string",
+          "example": "2"
+        }
+      }
+    },
+    "obj_5": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "string",
+          "example": "1"
+        },
+        "product_id": {
+          "type": "string",
+          "example": "5"
+        },
+        "stock_id": {
+          "type": "string",
+          "example": "2"
+        }
+      }
+    },
+    "obj_6": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Sangue Mágico"
+        }
+      }
+    },
+    "obj_7": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "string",
+          "example": "1"
+        },
+        "product_id": {
+          "type": "string",
+          "example": "5"
+        },
+        "stock_id": {
+          "type": "string",
+          "example": "2"
+        }
+      }
+    },
+    "obj_8": {
+      "type": "object",
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "example": "3"
+        },
+        "stock_id": {
+          "type": "string",
+          "example": "1"
+        },
+        "quantity": {
+          "type": "string",
+          "example": "1"
+        }
+      }
+    }
+  }
+}
