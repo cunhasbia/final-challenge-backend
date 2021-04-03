@@ -16,7 +16,7 @@ class StockProduct extends Model {
 
   static associate(models) {
     this.belongsTo(models.Product, {
-      as: 'product',
+      as: 'product_stock',
       foreignKey: 'product_id',
     });
 
